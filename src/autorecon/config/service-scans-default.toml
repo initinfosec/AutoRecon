@@ -444,6 +444,13 @@ service-names = [
     ports.udp = [137]
 
     [[smb.scan]]
+    name = 'enum4linux-ng'
+    command = 'enum4linux-ng -A -M -l -d {address} -oY -oJ 2>&1 | tee "{scandir}/enum4linux-ng.txt"'
+    run_once = true
+    ports.tcp = [139, 389, 445]
+    ports.udp = [137]
+
+    [[smb.scan]]
     name = 'nbtscan'
     command = 'nbtscan -rvh {address} 2>&1 | tee "{scandir}/nbtscan.txt"'
     run_once = true
