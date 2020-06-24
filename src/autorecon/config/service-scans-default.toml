@@ -141,6 +141,13 @@ ignore-service-names = [
     ]
 
     [[http.manual]]
+    description = '(ffuff) Fast web fuzzer written in go. Multi-threaded recursive direcotry/file enumeration fo web serversservers using various wordlists:'
+    commands = [
+        'ffuf -c -w /usr/share/seclists/Discovery/Web-Content/big.txt -u {scheme}://{address}:{port}/FUZZ -recursion -e .txt,.html,.php,.asp,.aspx,.jsp -o "{scandir}/{protocol}_{port}_{scheme}_ffuf_big.md" -of md'
+        'ffuf -c -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -u {scheme}://{address}:{port}/FUZZ -recursion -e .txt,.html,.php,.asp,.aspx,.jsp -o "{scandir}/{protocol}_{port}_{scheme}_ffuf_dirbuster.md" -of md'
+    ]
+
+    [[http.manual]]
     description = '(dirb) Recursive directory/file enumeration for web servers using various wordlists (same as dirsearch above):'
     commands = [
         'dirb {scheme}://{address}:{port}/ /usr/share/seclists/Discovery/Web-Content/big.txt -l -r -S -X ",.txt,.html,.php,.asp,.aspx,.jsp" -o "{scandir}/{protocol}_{port}_{scheme}_dirb_big.txt"',
