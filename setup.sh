@@ -94,19 +94,19 @@ do
 	    	echo -e "seclists detected installed, moving on.\n"
 	    else
 	    	echo -e "seclists not detected, installing.\nOutput is suppressed - this make take a moment, so please be patient.\n"
-		yes | $SUDO apt install seclists &> /dev/null && echo -e "seclists installed.\n"
+		yes | $SUDO apt install seclists &> /dev/null && echo -e "\nseclists installed.\n"
             fi
 	    #install golang if not already there
 	    if which golang &> /dev/null ; then
 	    	echo -e "golang detected installed, moving on.\n"
 	    else
 	    	echo -e "golang not detected, installing, please be patient.\n"
-		yes | $SUDO apt install golang &> /dev/null && echo -e "golang installed.\n"
+		yes | $SUDO apt install golang &> /dev/null && echo -e "\ngolang installed.\n"
             fi
 	    
 	    #install ffuf
 	    if which ffuf &> /dev/null ; then 
-	    	echo -e "\nFuff detected installed, moving on.\n"
+	    	echo -e "\nfuff detected installed, moving on.\n"
 	    else
 	    	echo -e "\nInstalling ffuf\n"
 		LATEST_VER="$(curl -sI "https://github.com/ffuf/ffuf/releases/latest" | grep -Po 'tag\/\K(v\S+)')"
@@ -115,14 +115,15 @@ do
 		ffufBin="ffuf_${relNum}_linux_amd64.tar.gz"
 		wget -q "$binURL"
 		tar xvzf "$ffufBin" &> /dev/null && rm "$ffufBin"
+		$SUDO mv ffuf /usr/bin/ && echo -e "\mffuf installed.\n"
 	    fi
 	    
 	    #enum4linux-ng installation
 	    echo -e "\nInstalling enum4linx-ng\n"
 	    mkdir enum4linux-ng && cd enum4linux-ng
 	    #grab necessary files
-	    wget https://raw.githubusercontent.com/cddmp/enum4linux-ng/master/enum4linux-ng.py
-	    wget https://raw.githubusercontent.com/cddmp/enum4linux-ng/master/requirements.txt
+	    wget -q https://raw.githubusercontent.com/cddmp/enum4linux-ng/master/enum4linux-ng.py
+	    wget -q https://raw.githubusercontent.com/cddmp/enum4linux-ng/master/requirements.txt
 	    
 	    #install deps
 	    yes | $SUDO apt install smbclient python3-ldap3 python3-yaml python3-impacket  &> /dev/null
@@ -167,9 +168,9 @@ done
 #Finish up
 printf '\n%.s' {1..3}
 printf '============================================================================'
-printf '\n%.s' {1..2}
+printf '\n%.s' {1..3}
 echo -e "AutoRecon by Tib3rius installed! (https://github.com/Tib3rius/AutoRecon)\n"
 echo -e "install script/wrapper by @initinfosec\n"
 echo -e "It's like bowling with bumpers. - @ippsec\n\n"
 printf '============================================================================'
-echo -e "\n"
+printf '\n%.s' {1..3}
