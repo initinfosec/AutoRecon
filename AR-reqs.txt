@@ -14,5 +14,5 @@ sslscan
 svwar
 tnscmd10g
 whatweb
-wkhtmltoimage
+wkhtmltopdf
 pipx
