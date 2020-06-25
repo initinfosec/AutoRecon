@@ -83,7 +83,7 @@ do
     esac
 done
 
-PS3='Install optional/extended (etc) tools (seclists, enum4linux-ng & dirsearch) for autorecon? : '
+PS3='Install optional/extended (etc) tools (seclists, enum4linux-ng, dirsearch, ffuf, & golang) for autorecon? : '
 options=("install etc tools" "do not install etc tools" "Quit")
 select opt in "${options[@]}"
 do
@@ -96,6 +96,25 @@ do
 	    	echo -e "seclists not detected, installing.\nOutput is suppressed - this make take a moment, so please be patient.\n"
 		yes | $SUDO apt install seclists &> /dev/null && echo -e "seclists installed.\n"
             fi
+	    #install golang if not already there
+	    if which golang &> /dev/null ; then
+	    	echo -e "golang detected installed, moving on.\n"
+	    else
+	    	echo -e "golang not detected, installing, please be patient.\n"
+		yes | $SUDO apt install golang &> /dev/null && echo -e "golang installed.\n"
+            fi
+	    
+	    #install ffuf
+	    if which ffuf &> /dev/null ; then 
+	    	echo -e "\nFuff detected installed, moving on.\n"
+	    else
+	    	echo -e "\nInstalling ffuf\n"
+		LATEST_VER="$(curl -sI "https://github.com/ffuf/ffuf/releases/latest" | grep -Po 'tag\/\K(v\S+)')"
+		relNum="${LATEST_VER:1}"
+		binURL="https://github.com/ffuf/ffuf/releases/download/${LATEST_VER}/ffuf_${relNum}_linux_amd64.tar.gz"
+		ffufBin="ffuf_${relNum}_linux_amd64.tar.gz"
+		tar xvzf "$fuffBin" &> /dev/null
+	    fi
 	    
 	    #enum4linux-ng installation
 	    echo -e "\nInstalling enum4linx-ng\n"
