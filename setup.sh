@@ -76,7 +76,7 @@ do
 
          "Quit")
 	    echo "Exiting..."
-            exit 
+            exit 1
             ;;
 
         *) echo "invalid option $REPLY";;
@@ -156,8 +156,9 @@ do
 
          "Quit")
 	    echo "Exiting..."
-            break
+            
 	    exit 1
+	    ;;
 	    
         *) echo "invalid option $REPLY";;
     esac
