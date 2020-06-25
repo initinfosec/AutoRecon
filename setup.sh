@@ -49,12 +49,12 @@ do
 	    "pipx - recommended")
             echo -e "\nInstalling via pipx\n"
 	    #pipx setup
-	    python3 -m pip install --user pipx
+	    python3 -m pip install --user pipx --no-warn-script-location
 	    python3 -m pipx ensurepath
 	    echo "alias autorecon='sudo $(which autorecon)'" >> ~/.bash_aliases && source ~/.bashrc
 	    #install main autorecon using pipx
 	    pipx install --spec "git+https://github.com/Tib3rius/AutoRecon.git" autorecon &> /dev/null
-	    python3 -m pipx ensurepath && echo -e "\nAutoRecon installed using pipx. Complete!\n"
+	    echo -e "\nAutoRecon installed using pipx. Complete!\n"
 	    break
             ;;
 
@@ -122,7 +122,7 @@ do
 	    #grab necessary files
 	    wget https://raw.githubusercontent.com/cddmp/enum4linux-ng/master/enum4linux-ng.py
 	    wget https://raw.githubusercontent.com/cddmp/enum4linux-ng/master/requirements.txt
-
+	    
 	    #install deps
 	    yes | $SUDO apt install smbclient python3-ldap3 python3-yaml python3-impacket  &> /dev/null
 	    /usr/bin/pip3 install -r requirements.txt  &> /dev/null
@@ -131,7 +131,8 @@ do
 	    $SUDO cp enum4linux-ng.py /usr/bin/enum4linux-ng
 	    $SUDO chmod +x /usr/bin/enum4linux-ng
 	    #cleanup
-	    rm -rf enum4linux
+	    cd ..
+	    rm -rf enum4linux-ng*
 	    echo -e "\nenum4linux-ng installed.\n"
 
 	    #dirsearch installation
@@ -141,7 +142,8 @@ do
 	    dirsearchPath=$(PWD)
 	    echo "alias dirsearch='python3 $dirsearchPath/direarch.py'" >> ~/.bash_aliases && source ~/.bashrc
 	    echo -e "\nDirsearch installed\n"
-            
+            cd ..
+	    
 	    break
 	    ;;
 
