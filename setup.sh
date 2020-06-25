@@ -51,7 +51,7 @@ do
 	    #pipx setup
 	    python3 -m pip install --user pipx
 	    python3 -m pipx ensurepath
-	    echo '''alias autorecon='sudo env "PATH=$PATH" autorecon'''' >> ~/.bash_aliases && source ~/.bashrc
+	    echo "alias autorecon='sudo $(which autorecon)'" >> ~/.bash_aliases && source ~/.bashrc
 	    #install main autorecon using pipx
 	    pipx install --spec "git+https://github.com/Tib3rius/AutoRecon.git" autorecon 
 	    python3 -m pipx ensurepath && echo -e "\nAutoRecon installed using pipx. Complete!\n"
@@ -120,7 +120,7 @@ do
 	    git clone https://github.com/maurosoria/dirsearch.git
 	    cd dirsearch
 	    dirsearchPath=$(PWD)
-	    echo "alias dirsearch='python3 $dirsearchPATH/direarch.py'" >> ~/.bash_aliases && source ~/.bashrc
+	    echo "alias dirsearch='python3 $dirsearchPath/direarch.py'" >> ~/.bash_aliases && source ~/.bashrc
 	    echo -e "\nDirsearch installed\n"
             
 	    break
