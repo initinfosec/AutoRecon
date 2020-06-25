@@ -83,14 +83,22 @@ do
     esac
 done
 
-PS3='Install optional/extended (etc) tools for autorecon? (enum4linux-ng & dirsearch)'
+PS3='Install optional/extended (etc) tools for autorecon? (seclists, enum4linux-ng & dirsearch)'
 options=("install etc tools" "do not install etc tools" "Quit")
 select opt in "${options[@]}"
 do
     case $opt in
 	    "install etc tools")
-            echo -e "\nInstalling enum4linx-ng\n"
+	    #install seclists if not already there
+	    if which seclists &> /dev/null ; then
+	    	echo -e "seclists detected installed, moving on.\n"
+	    else
+	    	echo -e "seclists not detected, installing.\nOutput is suppressed - this make take a moment, so please be patient.\n"
+		yes | $SUDO apt install seclists &> /dev/null && echo -e "seclists installed.\n"
+            fi
+	    
 	    #enum4linux-ng installation
+	    echo -e "\nInstalling enum4linx-ng\n"
 	    mkdir enum4linux-ng && cd enum4linux-ng
 	    #grab necessary files
 	    wget https://raw.githubusercontent.com/cddmp/enum4linux-ng/master/enum4linux-ng.py
@@ -114,15 +122,19 @@ do
 	    dirsearchPath=$(PWD)
 	    echo "alias dirsearch='python3 $dirsearchPATH/direarch.py'" >> ~/.bash_aliases && source ~/.bashrc
 	    echo -e "\nDirsearch installed\n"
-            ;;
+            
+	    break
+	    ;;
 
         "do not install etc tools")
             echo -e "skipping install of extra/non-required tools\n"
+	    
+	    break
 	    ;;
 
          "Quit")
 	    echo "Exiting..."
-            break
+            exit
             ;;
         *) echo "invalid option $REPLY";;
     esac
