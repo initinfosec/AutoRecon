@@ -2,6 +2,8 @@
 #simple script to setup AutoRecon
 
 #only tested on kali 2020.x - error checking/input validation is not thorough
+setupScript=$(find $PWD -name setup.sh 2>/dev/null)
+ARdir="$(dirname -- "$setupScript")"
 
 # check if running with sudo
 if [[ $EUID -ne 0 ]]; then
@@ -90,6 +92,7 @@ select opt in "${options[@]}"
 do
     case $opt in
 	    "install etc tools")
+
 	    #install seclists if not already there
 	    if which seclists &> /dev/null ; then
 	    	echo -e "seclists detected installed, moving on.\n"
@@ -97,6 +100,7 @@ do
 	    	echo -e "seclists not detected, installing.\nOutput is suppressed - this make take a moment, so please be patient.\n"
 		yes | $SUDO apt install seclists &> /dev/null && echo -e "\nseclists installed.\n"
             fi
+
 	    #install golang if not already there
 	    if which golang &> /dev/null ; then
 	    	echo -e "golang detected installed, moving on.\n"
@@ -105,7 +109,7 @@ do
 		yes | $SUDO apt install golang &> /dev/null && echo -e "\ngolang installed.\n"
             fi
 	    
-	    #install ffuf
+	    #install ffuf if not on system
 	    if which ffuf &> /dev/null ; then 
 	    	echo -e "\nfuff detected installed, moving on.\n"
 	    else
@@ -119,33 +123,41 @@ do
 		$SUDO mv ffuf /usr/share/ && $SUDO ln -s /usr/share/ffuf /usr/bin/ffuf && echo -e "\nffuf installed.\n"
 	    fi
 	    
-	    #enum4linux-ng installation
-	    echo -e "\nInstalling enum4linx-ng\n"
-	    mkdir enum4linux-ng && cd enum4linux-ng
-	    #grab necessary files
-	    wget -q https://raw.githubusercontent.com/cddmp/enum4linux-ng/master/enum4linux-ng.py
-	    wget -q https://raw.githubusercontent.com/cddmp/enum4linux-ng/master/requirements.txt
+	    #enum4linux-ng installation if not on system
+	    if which enum4linux-ng &> /dev/null ; then 
+	    	echo -e "\nenum4linux-ng detected installed, moving on.\n"
+	    else
+	        echo -e "\nInstalling enum4linx-ng\n"
+	        mkdir enum4linux-ng && cd enum4linux-ng
+                #grab necessary files
+	        wget -q https://raw.githubusercontent.com/cddmp/enum4linux-ng/master/enum4linux-ng.py
+                wget -q https://raw.githubusercontent.com/cddmp/enum4linux-ng/master/requirements.txt
 	    
-	    #install deps
-	    yes | $SUDO apt install smbclient python3-ldap3 python3-yaml python3-impacket  &> /dev/null
-	    /usr/bin/pip3 install -r requirements.txt  &> /dev/null
+	        #install deps
+	        yes | $SUDO apt install smbclient python3-ldap3 python3-yaml python3-impacket  &> /dev/null
+	        /usr/bin/pip3 install -r requirements.txt  &> /dev/null
 
-	    #set to $PATH (vs trying to find where user installed & sourcing that dir)
-	    $SUDO cp enum4linux-ng.py /usr/bin/enum4linux-ng
-	    $SUDO chmod +x /usr/bin/enum4linux-ng
-	    #cleanup
-	    cd ..
-	    rm -rf enum4linux-ng*
-	    echo -e "\nenum4linux-ng installed.\n"
+	        #set to $PATH (vs trying to find where user installed & sourcing that dir)
+	        $SUDO cp enum4linux-ng.py /usr/bin/enum4linux-ng
+	        $SUDO chmod +x /usr/bin/enum4linux-ng
+	        #cleanup
+	        cd $ARdir
+	        rm -rf enum4linux-ng*
+	        echo -e "\nenum4linux-ng installed.\n"
+	   fi
 
-	    #dirsearch installation
-	    echo -e "\nInstalling dirsearch\n"
-	    git clone https://github.com/maurosoria/dirsearch.git
-	    $SUDO mv dirsearch /usr/share/
-	    $SUDO ln -s /usr/share/dirsearch/dirsearch.py /usr/bin/dirsearch
-	    echo -e "\nDirsearch installed\n"
-            cd ..
-	    
+	    #dirsearch installation if not on system
+	    if which dirsearch &> /dev/null ; then 
+	    	echo -e "\ndirsearch detected installed, moving on.\n"
+	    else
+	        echo -e "\nInstalling dirsearch\n"
+	        git clone https://github.com/maurosoria/dirsearch.git
+	        $SUDO mv dirsearch /usr/share/
+	        $SUDO ln -s /usr/share/dirsearch/dirsearch.py /usr/bin/dirsearch
+	        echo -e "\nDirsearch installed\n"
+                cd $ARDir
+	    fi
+
 	    break
 	    ;;
 
