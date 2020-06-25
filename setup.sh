@@ -115,7 +115,7 @@ do
 	    	echo -e "\nfuff detected installed, moving on.\n"
 	    else
 	    	echo -e "\nInstalling ffuf\n"
-	        fuffDir="$ARdir/ffuf"
+	        ffufDir="$ARdir/ffuf"
 		mkdir $ffufDir && cd $ffufDir
 		LATEST_VER="$(curl -sI "https://github.com/ffuf/ffuf/releases/latest" | grep -Po 'tag\/\K(v\S+)')"
 		relNum="${LATEST_VER:1}"
