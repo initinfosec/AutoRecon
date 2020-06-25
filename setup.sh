@@ -114,7 +114,7 @@ do
 		binURL="https://github.com/ffuf/ffuf/releases/download/${LATEST_VER}/ffuf_${relNum}_linux_amd64.tar.gz"
 		ffufBin="ffuf_${relNum}_linux_amd64.tar.gz"
 		wget -q "$binURL"
-		tar xvzf "$fuffBin" &> /dev/null
+		tar xvzf "$ffufBin" &> /dev/null && rm "$ffufBin"
 	    fi
 	    
 	    #enum4linux-ng installation
@@ -140,7 +140,7 @@ do
 	    echo -e "\nInstalling dirsearch\n"
 	    git clone https://github.com/maurosoria/dirsearch.git
 	    cd dirsearch
-	    dirsearchPath=$(PWD)
+	    dirsearchPath="$PWD"
 	    echo "alias dirsearch='python3 $dirsearchPath/direarch.py'" >> ~/.bash_aliases && source ~/.bashrc
 	    echo -e "\nDirsearch installed\n"
             cd ..
@@ -166,9 +166,10 @@ done
 
 #Finish up
 printf '\n%.s' {1..3}
-printf '----------------------------------------------------------------------------'
+printf '============================================================================'
 printf '\n%.s' {1..2}
 echo -e "AutoRecon by Tib3rius installed! (https://github.com/Tib3rius/AutoRecon)\n"
 echo -e "install script/wrapper by @initinfosec\n"
 echo -e "It's like bowling with bumpers. - @ippsec\n\n"
-printf '----------------------------------------------------------------------------'
+printf '============================================================================'
+echo -e "\n"
