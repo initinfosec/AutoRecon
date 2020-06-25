@@ -96,9 +96,9 @@ do
 
 	    #install seclists if not already there
 	    if which seclists &> /dev/null ; then
-	    	echo -e "seclists detected installed, moving on.\n"
+	    	echo -e "\nseclists detected installed, moving on.\n"
 	    else
-	    	echo -e "seclists not detected, installing.\nOutput is suppressed - this make take a moment, so please be patient.\n"
+	    	echo -e "\nseclists not detected, installing.\nOutput is suppressed - this make take a moment, so please be patient.\n"
 		yes | $SUDO apt install seclists &> /dev/null && echo -e "\nseclists installed.\n"
             fi
 
@@ -184,6 +184,6 @@ printf '========================================================================
 printf '\n%.s' {1..3}
 echo -e "AutoRecon by Tib3rius installed! (https://github.com/Tib3rius/AutoRecon)\n"
 echo -e "install script/wrapper by @initinfosec\n"
-echo -e "It's like bowling with bumpers. - @ippsec\n\n"
+echo -e "'It's like bowling with bumpers.' - @ippsec\n\n"
 printf '============================================================================'
 printf '\n%.s' {1..3}
