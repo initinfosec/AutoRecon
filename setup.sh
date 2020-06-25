@@ -113,6 +113,7 @@ do
 		relNum="${LATEST_VER:1}"
 		binURL="https://github.com/ffuf/ffuf/releases/download/${LATEST_VER}/ffuf_${relNum}_linux_amd64.tar.gz"
 		ffufBin="ffuf_${relNum}_linux_amd64.tar.gz"
+		wget -q "$binURL"
 		tar xvzf "$fuffBin" &> /dev/null
 	    fi
 	    
