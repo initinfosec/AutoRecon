@@ -53,7 +53,7 @@ do
 	    python3 -m pipx ensurepath
 	    echo "alias autorecon='sudo $(which autorecon)'" >> ~/.bash_aliases && source ~/.bashrc
 	    #install main autorecon using pipx
-	    pipx install --spec "git+https://github.com/Tib3rius/AutoRecon.git" autorecon 
+	    pipx install --spec "git+https://github.com/Tib3rius/AutoRecon.git" autorecon &> /dev/null
 	    python3 -m pipx ensurepath && echo -e "\nAutoRecon installed using pipx. Complete!\n"
 	    break
             ;;
@@ -61,14 +61,14 @@ do
         "pip3")
             echo -e "\nInstalling via pip3"
 	    #install main autorecon using pip3
-	    python3 -m pip install git+https://github.com/Tib3rius/AutoRecon.git && echo -e "\nAutoRecon installed using pip3. Complete!\n"
+	    python3 -m pip install git+https://github.com/Tib3rius/AutoRecon.git &> /dev/null && echo -e "\nAutoRecon installed using pip3. Complete!\n"
 	    break
             ;;
 
         "manual as script")
             echo -e "\nInstalling as a manual script"
 	    #install main autorecon using manual/script method
-	    python3 -m pip install -r requirements.txt
+	    python3 -m pip install -r requirements.txt &> /dev/null
 	    echo "alias autorecon='sudo python3 $PWD/src/autorecon.py'" >> ~/.bash_aliases && source ~/.bashrc
 	    echo -e "\nAutoRecon installed as a script. Complete!\n"
 	    break
@@ -105,8 +105,8 @@ do
 	    wget https://raw.githubusercontent.com/cddmp/enum4linux-ng/master/requirements.txt
 
 	    #install deps
-	    $SUDO apt install smbclient python3-ldap3 python3-yaml python3-impacket
-	    /usr/bin/pip3 install -r requirements.txt
+	    yes | $SUDO apt install smbclient python3-ldap3 python3-yaml python3-impacket  &> /dev/null
+	    /usr/bin/pip3 install -r requirements.txt  &> /dev/null
 
 	    #set to $PATH (vs trying to find where user installed & sourcing that dir)
 	    $SUDO cp enum4linux-ng.py /usr/bin/enum4linux-ng
