@@ -34,7 +34,7 @@ while IFS='' read -r LINE || [ -n "${LINE}" ]; do
 	if which ${LINE} &> /dev/null ; then
 		echo -e "${LINE} detected installed, moving on.\n"
 	else
-		echo -e "${LINE} not detected, installing. Output is silcenced - installation may take a moment, please be patient...\n"
+		echo -e "${LINE} not detected, installing, please be patient...\n"
 		yes | $SUDO apt install ${LINE} &> /dev/null && echo -e "${LINE} installed.\n"
 	fi
 done < AR-reqs.txt
