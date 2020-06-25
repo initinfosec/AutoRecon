@@ -115,7 +115,7 @@ do
 		ffufBin="ffuf_${relNum}_linux_amd64.tar.gz"
 		wget -q "$binURL"
 		tar xvzf "$ffufBin" &> /dev/null && rm "$ffufBin"
-		$SUDO mv ffuf /usr/bin/ && echo -e "\mffuf installed.\n"
+		$SUDO mv ffuf /usr/share/ && $SUDO ln -s /usr/share/ffuf /usr/bin/ffuf && echo -e "\nffuf installed.\n"
 	    fi
 	    
 	    #enum4linux-ng installation
@@ -140,9 +140,8 @@ do
 	    #dirsearch installation
 	    echo -e "\nInstalling dirsearch\n"
 	    git clone https://github.com/maurosoria/dirsearch.git
-	    cd dirsearch
-	    dirsearchPath="$PWD"
-	    echo "alias dirsearch='python3 $dirsearchPath/direarch.py'" >> ~/.bash_aliases && source ~/.bashrc
+	    $SUDO mv dirsearch /usr/share/
+	    $SUDO ln -s /usr/share/dirsearch/dirsearch.py /usr/bin/dirsearch
 	    echo -e "\nDirsearch installed\n"
             cd ..
 	    
