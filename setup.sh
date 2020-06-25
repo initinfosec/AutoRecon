@@ -83,7 +83,7 @@ do
     esac
 done
 
-PS3='Install optional/extended (etc) tools for autorecon? (seclists, enum4linux-ng & dirsearch)'
+PS3='Install optional/extended (etc) tools (seclists, enum4linux-ng & dirsearch) for autorecon? : '
 options=("install etc tools" "do not install etc tools" "Quit")
 select opt in "${options[@]}"
 do
@@ -136,10 +136,12 @@ do
 	    echo "Exiting..."
             exit
             ;;
+	    
         *) echo "invalid option $REPLY";;
     esac
 done
 
-
-echo -e "AutoRecon by Tib3rius installed! install script/wrapper by @initinfosec\n"
+clear
+echo -e "AutoRecon by Tib3rius installed! (https://github.com/Tib3rius/AutoRecon)\n"
+echo -e "install script/wrapper by @initinfosec\n"
 echo -e "It's like bowling with bumpers. - @ippsec\n\n"
