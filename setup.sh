@@ -115,13 +115,16 @@ do
 	    	echo -e "\nfuff detected installed, moving on.\n"
 	    else
 	    	echo -e "\nInstalling ffuf\n"
+	        fuffDir="$ARdir/ffuf'
+		mkdir $ffufDir && cd $ffufDir
 		LATEST_VER="$(curl -sI "https://github.com/ffuf/ffuf/releases/latest" | grep -Po 'tag\/\K(v\S+)')"
 		relNum="${LATEST_VER:1}"
 		binURL="https://github.com/ffuf/ffuf/releases/download/${LATEST_VER}/ffuf_${relNum}_linux_amd64.tar.gz"
 		ffufBin="ffuf_${relNum}_linux_amd64.tar.gz"
 		wget -q "$binURL"
 		tar xvzf "$ffufBin" &> /dev/null && rm "$ffufBin"
-		$SUDO mv ffuf /usr/share/ && $SUDO ln -s /usr/share/ffuf /usr/bin/ffuf && echo -e "\nffuf installed.\n"
+		$SUDO mv $ffufDir /usr/share/ && $SUDO ln -s /usr/share/ffuf/ffuf /usr/bin/ffuf && echo -e "\nffuf installed.\n"
+		cd $ARdir
 	    fi
 	    
 	    #enum4linux-ng installation if not on system
