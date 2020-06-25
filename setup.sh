@@ -156,14 +156,18 @@ do
 
          "Quit")
 	    echo "Exiting..."
-            exit
-            ;;
+            break
+	    exit 1
 	    
         *) echo "invalid option $REPLY";;
     esac
 done
 
-clear
+#Finish up
+printf '\n%.s' {1..3}
+printf '----------------------------------------------------------------------------'
+printf '\n%.s' {1..2}
 echo -e "AutoRecon by Tib3rius installed! (https://github.com/Tib3rius/AutoRecon)\n"
 echo -e "install script/wrapper by @initinfosec\n"
 echo -e "It's like bowling with bumpers. - @ippsec\n\n"
+printf '----------------------------------------------------------------------------'
