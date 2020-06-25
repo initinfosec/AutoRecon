@@ -13,7 +13,7 @@ if [[ $EUID -ne 0 ]]; then
 fi
 
 echo -e "Checking your system against requirements for AutoRecon. Installing only what you don't have.\n\n"
-
+sleep 3
 
 #general AR setup
 
@@ -61,7 +61,7 @@ do
 	    #pipx setup
 	    python3 -m pip install --user pipx --no-warn-script-location
 	    python3 -m pipx ensurepath
-
+	    source ~/.bashrc
 	    #install main autorecon using pipx
 	    pipx install --spec "git+https://github.com/Tib3rius/AutoRecon.git" autorecon &> /dev/null
 	    source ~/.bashrc
