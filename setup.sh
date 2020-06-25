@@ -4,6 +4,7 @@
 #only tested on kali 2020.x - error checking/input validation is not thorough
 setupScript=$(find $PWD -name setup.sh 2>/dev/null)
 ARdir="$(dirname -- "$setupScript")"
+AR-reqs="$ARdir"/AR-reqs.txt
 
 # check if running with sudo
 if [[ $EUID -ne 0 ]]; then
@@ -39,7 +40,7 @@ while IFS='' read -r LINE || [ -n "${LINE}" ]; do
 		echo -e "${LINE} not detected, installing, please be patient...\n"
 		yes | $SUDO apt install ${LINE} &> /dev/null && echo -e "${LINE} installed.\n"
 	fi
-done < AR-reqs.txt
+done < $AR-reqs
 
 echo -e "Prerequisiste install checks done, installing autorecon.\n"
 
