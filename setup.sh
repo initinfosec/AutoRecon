@@ -33,6 +33,13 @@ else
 	yes | $SUDO apt install python3-pip &> /dev/null && echo -e "pip3 installed.\n"
 fi
 
+if which svwar &> /dev/null ; then
+	echo -e "svwar detected installed, moving on.\n"
+else
+	echo -e "svwar not detected, installing (from sipvicious.)\n"
+	yes | $SUDO apt install sipvicious &> /dev/null && echo -e "svwar installed (from sipvicous.)\n"
+fi
+
 while IFS='' read -r LINE || [ -n "${LINE}" ]; do
 	if which ${LINE} &> /dev/null ; then
 		echo -e "${LINE} detected installed, moving on.\n"
@@ -104,7 +111,7 @@ do
             fi
 
 	    #install golang if not already there
-	    if which golang &> /dev/null ; then
+	    if which go &> /dev/null ; then
 	    	echo -e "golang detected installed, moving on.\n"
 	    else
 	    	echo -e "golang not detected, installing, please be patient.\n"
