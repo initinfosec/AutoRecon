@@ -51,9 +51,11 @@ do
 	    #pipx setup
 	    python3 -m pip install --user pipx --no-warn-script-location
 	    python3 -m pipx ensurepath
-	    echo "alias autorecon='sudo $(which autorecon)'" >> ~/.bash_aliases && source ~/.bashrc
+
 	    #install main autorecon using pipx
 	    pipx install --spec "git+https://github.com/Tib3rius/AutoRecon.git" autorecon &> /dev/null
+	    python3 -m pipx ensurepath
+	    echo "alias autorecon='sudo $(which autorecon)'" >> ~/.bash_aliases && source ~/.bashrc
 	    echo -e "\nAutoRecon installed using pipx. Complete!\n"
 	    break
             ;;
