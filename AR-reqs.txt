@@ -11,7 +11,7 @@ smbmap
 smtp-user-enum
 snmpwalk
 sslscan
-svwar
+sipvicious
 tnscmd10g
 whatweb
 wkhtmltopdf
