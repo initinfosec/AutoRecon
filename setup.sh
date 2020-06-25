@@ -115,7 +115,7 @@ do
 	    	echo -e "\nfuff detected installed, moving on.\n"
 	    else
 	    	echo -e "\nInstalling ffuf\n"
-	        fuffDir="$ARdir/ffuf'
+	        fuffDir="$ARdir/ffuf"
 		mkdir $ffufDir && cd $ffufDir
 		LATEST_VER="$(curl -sI "https://github.com/ffuf/ffuf/releases/latest" | grep -Po 'tag\/\K(v\S+)')"
 		relNum="${LATEST_VER:1}"
@@ -187,6 +187,6 @@ printf '========================================================================
 printf '\n%.s' {1..3}
 echo -e "AutoRecon by Tib3rius installed!   more info at: https://github.com/Tib3rius/AutoRecon\n"
 echo -e "install script/wrapper by @initinfosec\n"
-echo -e "'It's like bowling with bumpers.' - @ippsec\n\n"
+echo -e "' It's like bowling with bumpers. ' - @ippsec\n\n"
 printf '============================================================================'
 printf '\n%.s' {1..3}
