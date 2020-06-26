@@ -65,14 +65,14 @@ do
 	    #pipx setup
 	    python3 -m pip install --user pipx --no-warn-script-location
 	    python3 -m pipx ensurepath
+	    activate		#activate the venv to properly apply changes when installing AR w/ pipx
 	    #install main autorecon using pipx
 	    pipx install --spec "git+https://github.com/Tib3rius/AutoRecon.git" autorecon &> /dev/null
-	    activate
 	    echo "alias autorecon='sudo $(which autorecon)'" >> ~/.bash_aliases && source ~/.bashrc
 	    source ~/.bashrc
 	    echo -e "\nAutoRecon installed using pipx. Complete!\n"
-	    echo -e "autorecon location: $(which autorecon)\n"
-	    echo -e "With pipx, you may need to launch a new shell or re-login to apply changes after end of script.\n"
+	    echo -e "AutoRecon location: $(which autorecon)\n"
+	    echo -e "With pipx, you may need to launch a new shell or re-login after script completion before you start using AutoRecon.\n"
 	    break
             ;;
 
