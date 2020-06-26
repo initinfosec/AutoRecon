@@ -24,6 +24,12 @@ AutoRecon was inspired by three tools which the author used during the OSCP labs
 * Full logging of commands that were run, along with errors if they fail.
 * Global and per-scan pattern matching so you can highlight/extract important information from the noise.
 
+------------------------------------------------------------
+
+Start of @initinfosec updates.
+
+------------------------------------------------------------
+
 
 ## Updates in 1.1 (setup script)
 
@@ -38,13 +44,14 @@ Please find installation instructions for utilizing the script below.
 
 ### Caveat emptor
 
-* The setup.sh script doesn't have extensive error checking, and most of stdout on installations is suppressed. Manually toubleshooting may need to be done on failures. Use at your own risk, et al.
+* The setup.sh script doesn't have extensive error checking, and most of stdout on installations is suppressed. Manual toubleshooting may need to be done on failures. Use at your own risk, *et al*.
 
 ### To-Do
 
 * Better error checking in script
 * Build function on setup script start that checks for updates to existing installations (and gives options to update)
-* Move enum4linux-ng into required dependencies section for package, or move enum4linux-ng to the _manual_commands.txt file if user chooses not to install it.
+* Move enum4linux-ng into required dependencies section for package, or move enum4linux-ng to the manual_commands.txt file if user chooses not to install it.
+* Move files related to setup.sh to their own subfolder?
 
 
 ## Installation:
@@ -52,13 +59,13 @@ Please find installation instructions for utilizing the script below.
 * git clone the repository
 * run setup.sh
 * step through menu making choices as necessary
-* confirm installation was successful 
+* confirm installation was successful - if using the pipx install option you will probably need to log out of the shell that ran the script and spawn a new one.
 
--------------------------------------------------------
+------------------------------------------------------------
 
-End of @initinfosec updates. Original README below
+End of @initinfosec updates. Rest of original README below
 
--------------------------------------------------------
+------------------------------------------------------------
 
 
 ## Requirements
