@@ -59,7 +59,7 @@ done < $scriptReqs
 
 echo -e "Prerequisiste install checks done, starting autorecon install.\n\n"
 
-PS3='Install optional tools/extended tool chest (etc) for autorecon? [The etc currently includes seclists, enum4linux-ng, dirsearch, ffuf, & golang] : '
+PS3='Install optional tools/extended tool chest, "etc" for autorecon? [The etc currently includes seclists, enum4linux-ng, dirsearch, ffuf, & golang] : '
 options=("install etc tools" "do not install etc tools" "Quit")
 select opt in "${options[@]}"
 do
