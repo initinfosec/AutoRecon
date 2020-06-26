@@ -105,7 +105,7 @@ do
 	    if which enum4linux-ng &> /dev/null ; then 
 	    	echo -e "\nenum4linux-ng detected installed, moving on.\n"
 	    else
-	        echo -e "\nenum4linx-ng not detected, installing...\n"
+	        echo -e "\nenum4linx-ng not detected, installing...\n(this make take a moment, so please be patient)...\n"
 	        mkdir enum4linux-ng && cd enum4linux-ng
                 #grab necessary files
 	        wget -q https://raw.githubusercontent.com/cddmp/enum4linux-ng/master/enum4linux-ng.py
