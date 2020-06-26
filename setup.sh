@@ -16,8 +16,9 @@ pipxInstall () {
 	    # activate the venv via a new bash login shell for pipx config/AR install
 	    #install main autorecon using pipx
 	    bash -l -c 'pipx install --spec git+https://github.com/initinfosec/AutoRecon.git autorecon &> /dev/null'
-	    setAlias="alias autorecon='sudo $(which autorecon)'"
-	    bash -l -c 'echo "${setAlias}" >> ~/.bash_aliases && source ~/.bashrc'
+	    echo="alias autorecon='sudo \$(which autorecon)'" > $ARdir/ddAlias 		#place alias in local file to avoid quote conflicts with new login commands
+	    bash -l -c 'cat $ARdir/addAlias >> ~/.bash_aliases && source ~/.bashrc'	#add alias in remote shell. which cmd will resolve at runtime of alias cmd exec
+	    rm $ARdir/addAlias		#cleanup after donoe
 	    bash -l -c 'echo -e "\n\nAutoRecon installed using pipx. Complete!\n" ; echo -e "AutoRecon location: $(which autorecon)\n"'
 }
 
