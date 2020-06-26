@@ -12,16 +12,6 @@ if [[ $EUID -ne 0 ]]; then
 	SUDO='sudo'
 fi
 
-pipxInstall () {
-	    # activate the venv via a new bash login shell for pipx config/AR install
-	    #install main autorecon using pipx
-	    bash -l -c 'pipx install --spec git+https://github.com/initinfosec/AutoRecon.git autorecon &> /dev/null'
-	    echo="alias autorecon='sudo \$(which autorecon)'" > $ARdir/addAlias		#place alias in local file to avoid quote conflicts with new login commands
-	    bash -l -c 'cat $ARdir/addAlias >> ~/.bash_aliases && source ~/.bashrc'	#add alias in remote shell. which cmd will resolve at runtime of alias cmd exec
-	    rm $ARdir/addAlias		#cleanup after donoe
-	    bash -l -c 'echo -e "\n\nAutoRecon installed using pipx. Complete!\n" ; echo -e "AutoRecon location: $(which autorecon)\n"'
-}
-
 echo -e "Checking your system against requirements for AutoRecon. Installing only what you don't have.\n\n"
 sleep 2
 
@@ -156,16 +146,10 @@ do
     esac
 done
 
-PS3='Please select your install method for AutoRecon: '
-options=("pipx - recommended" "pip3" "manual as script" "Quit")
-select opt in "${options[@]}"
-do
-    case $opt in
-	    "pipx - recommended")
-            echo -e "\nInstalling via pipx\n"
-	    #pipx setup
-	    
-	    #install if pipx & python3-venv if they do not exist on sys
+
+pipxInstall () {
+	    #function to take care of pipx setup & installation of AutoRecon via pipx
+	    #install if pipx if it does not exist on sys
 	    if which pipx &> /dev/null ; then
 	    	echo -e "pipx detected installed, moving on.\n"
 	    else
@@ -175,6 +159,26 @@ do
 	    
 	    python3 -m pip install --user pipx --no-warn-script-location &> /dev/null
 	    python3 -m pipx ensurepath
+	    
+	    #source .bashrc to propagate PATH updates
+	    source ~/.bashrc
+	    
+	    #install autorecon using pipx
+	    pipx install --spec git+https://github.com/initinfosec/AutoRecon.git autorecon &> /dev/null
+	    echo="alias autorecon='sudo \$(which autorecon)'" >> ~/.bash_aliases && source ~/.bashrc	#have alias look for location of AR at runtime using sudo
+	    #N.B. if using sudo, may desire to run scans in the following fashion: $autorecon <opts> <target> && sudo chown -R $USER:$USER <ouput_dir>
+	    echo -e "\n\nAutoRecon installed using pipx. Complete!\n" ; echo -e "AutoRecon location: $(which autorecon)\n"'
+}
+
+
+PS3='Please select your install method for AutoRecon: '
+options=("pipx - recommended" "pip3" "manual as script" "Quit")
+select opt in "${options[@]}"
+do
+    case $opt in
+	    "pipx - recommended")
+            echo -e "\nInstalling via pipx\n"
+	    #pipx AR installation
 	    pipxInstall	 	#call to function to install/configure AR in new login shell so changes are properly applied
 	    source ~/.bashrc
 	    echo -e "\nWith pipx, you may need to launch a new shell or re-login after script completion before you start using AutoRecon.\n"
