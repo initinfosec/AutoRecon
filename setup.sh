@@ -16,7 +16,7 @@ pipxInstall () {
 	    # activate the venv via a new bash login shell for pipx config/AR install
 	    #install main autorecon using pipx
 	    bash -l -c 'pipx install --spec git+https://github.com/initinfosec/AutoRecon.git autorecon &> /dev/null'
-	    echo="alias autorecon='sudo \$(which autorecon)'" > $ARdir/ddAlias 		#place alias in local file to avoid quote conflicts with new login commands
+	    echo="alias autorecon='sudo \$(which autorecon)'" > $ARdir/addAlias		#place alias in local file to avoid quote conflicts with new login commands
 	    bash -l -c 'cat $ARdir/addAlias >> ~/.bash_aliases && source ~/.bashrc'	#add alias in remote shell. which cmd will resolve at runtime of alias cmd exec
 	    rm $ARdir/addAlias		#cleanup after donoe
 	    bash -l -c 'echo -e "\n\nAutoRecon installed using pipx. Complete!\n" ; echo -e "AutoRecon location: $(which autorecon)\n"'
@@ -171,13 +171,6 @@ do
 	    else
 	    	echo -e "pipx not detected, installing...\n"
 		yes | $SUDO apt install pipx &> /dev/null && echo -e "\npipx installed.\n"
-	    fi
-	    
-	    if locate venv &> /dev/null ; then
-	    	echo -e "python3-venv detected installed, moving on.\n"
-	    else
-	    	echo -e "python3-venv not detected, installing...\n"
-		yes | $SUDO apt install python3-venv &> /dev/null && echo -e "\npython3-venv installed.\n"
 	    fi
 	    
 	    python3 -m pip install --user pipx --no-warn-script-location &> /dev/null
