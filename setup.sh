@@ -72,7 +72,7 @@ do
 	    if which seclists &> /dev/null ; then
 	    	echo -e "\nseclists detected installed, moving on.\n"
 	    else
-	    	echo -e "\nseclists not detected, installing...\nthis make take a moment, so please be patient...\n"
+	    	echo -e "\nseclists not detected, installing...\n(this make take a moment, so please be patient)...\n"
 		yes | $SUDO apt install seclists &> /dev/null && echo -e "\nseclists installed.\n"
             fi
 
