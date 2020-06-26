@@ -49,7 +49,7 @@ while IFS='' read -r LINE || [ -n "${LINE}" ]; do
 	fi
 done < $scriptReqs
 
-PS3='Install optional tools/extended tool chest, "etc," for autorecon? (The etc toolset currently includes seclists, enum4linux-ng, dirsearch, ffuf, & golang.) : '
+PS3='Install optional tools/extended tool chest ("etc") for autorecon? (The etc toolset currently includes seclists, enum4linux-ng, dirsearch, ffuf, & golang.) : '
 options=("install etc tools" "do not install etc tools" "Quit")
 select opt in "${options[@]}"
 do
