@@ -12,6 +12,10 @@ if [[ $EUID -ne 0 ]]; then
 	SUDO='sudo'
 fi
 
+activate () {
+# activate the venv for pipx config in script if needed
+. ../.env/bin/activate
+}
 echo -e "Checking your system against requirements for AutoRecon. Installing only what you don't have.\n\n"
 sleep 2
 
@@ -61,12 +65,14 @@ do
 	    #pipx setup
 	    python3 -m pip install --user pipx --no-warn-script-location
 	    python3 -m pipx ensurepath
-	    source ~/.bashrc
 	    #install main autorecon using pipx
 	    pipx install --spec "git+https://github.com/Tib3rius/AutoRecon.git" autorecon &> /dev/null
-	    source ~/.bashrc
+	    activate
 	    echo "alias autorecon='sudo $(which autorecon)'" >> ~/.bash_aliases && source ~/.bashrc
+	    source ~/.bashrc
 	    echo -e "\nAutoRecon installed using pipx. Complete!\n"
+	    echo -e "autorecon location: $(which autorecon)\n"
+	    echo -e "With pipx, you may need to launch a new shell or re-login to apply changes after end of script.\n"
 	    break
             ;;
 
@@ -195,6 +201,7 @@ printf '========================================================================
 printf '\n%.s' {1..3}
 echo -e "AutoRecon by Tib3rius installed!   more info at: https://github.com/Tib3rius/AutoRecon\n"
 echo -e "install script/wrapper by @initinfosec\n"
-echo -e "' It's like bowling with bumpers. ' - @ippsec\n\n"
+echo "'It's like bowling with bumpers.' - @ippsec"
+printf '\n%.s' {1..3}
 printf '==================================================================================================='
 printf '\n%.s' {1..3}
