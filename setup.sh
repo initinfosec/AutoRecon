@@ -17,7 +17,7 @@ pipxInstall () {
 	    #install main autorecon using pipx
 	    setAlias="alias autorecon='sudo $(which autorecon)'"
 	    bash -l -c 'pipx install git+https://github.com/Tib3rius/AutoRecon.git &> /dev/null'
-	    bash -l -c 'echo "$(setAlias)" >> ~/.bash_aliases && source ~/.bashrc'
+	    bash -l -c 'echo "${setAlias}" >> ~/.bash_aliases && source ~/.bashrc'
 	    bash -l -c 'echo -e "\nAutoRecon installed using pipx. Complete!\n" ; echo -e "AutoRecon location: $(which autorecon)\n"'
 }
 
@@ -60,7 +60,7 @@ done < $scriptReqs
 
 echo -e "Prerequisiste install checks done, starting autorecon install.\n\n"
 
-PS3='Install optional tools/extended tool chest, "etc," for autorecon? The etc toolset currently includes seclists, enum4linux-ng, dirsearch, ffuf, & golang. : '
+PS3='Install optional tools/extended tool chest, "etc," for autorecon? (The etc toolset currently includes seclists, enum4linux-ng, dirsearch, ffuf, & golang.) : '
 options=("install etc tools" "do not install etc tools" "Quit")
 select opt in "${options[@]}"
 do
@@ -79,7 +79,7 @@ do
 	    if which go &> /dev/null ; then
 	    	echo -e "golang detected installed, moving on.\n"
 	    else
-	    	echo -e "golang not detected, installing...\n"
+	    	echo -e "golang not detected, installing...\n(this make take a moment, so please be patient)...\n"
 		yes | $SUDO apt install golang &> /dev/null && echo -e "\ngolang installed.\n"
             fi
 	    
@@ -200,8 +200,8 @@ printf '\n%.s' {1..3}
 printf '========================================================================================='
 printf '\n%.s' {1..3}
 echo -e "AutoRecon by Tib3rius installed!   more info at: https://github.com/Tib3rius/AutoRecon\n"
-echo -e "install script/wrapper by @initinfosec\n"
+echo -e "install script/wrapper by @initinfosec\n\n"
 echo "'It's like bowling with bumpers.' - @ippsec"
-printf '\n%.s' {1..3}
+printf '\n%.s' {1..2}
 printf '========================================================================================='
 printf '\n%.s' {1..3}
