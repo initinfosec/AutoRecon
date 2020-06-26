@@ -65,7 +65,7 @@ do
 	    #pipx setup
 	    python3 -m pip install --user pipx --no-warn-script-location
 	    python3 -m pipx ensurepath
-	    activate		#activate the venv to properly apply changes when installing AR w/ pipx
+	    #activate		#activate the venv to properly apply changes when installing AR w/ pipx
 	    #install main autorecon using pipx
 	    pipx install git+https://github.com/Tib3rius/AutoRecon.git &> /dev/null
 	    echo "alias autorecon='sudo $(which autorecon)'" >> ~/.bash_aliases && source ~/.bashrc
@@ -197,11 +197,11 @@ done
 
 #Finish up
 printf '\n%.s' {1..3}
-printf '==================================================================================================='
+printf '========================================================================================='
 printf '\n%.s' {1..3}
 echo -e "AutoRecon by Tib3rius installed!   more info at: https://github.com/Tib3rius/AutoRecon\n"
 echo -e "install script/wrapper by @initinfosec\n"
 echo "'It's like bowling with bumpers.' - @ippsec"
 printf '\n%.s' {1..3}
-printf '==================================================================================================='
+printf '========================================================================================='
 printf '\n%.s' {1..3}
