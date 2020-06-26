@@ -5,8 +5,8 @@ description = "A multi-threaded network reconaissance tool which performs automa
 authors = ["Tib3rius"]
 license = "GPL-3.0-only"
 readme = "README.md"
-homepage = "https://github.com/Tib3rius/AutoRecon"
-repository = "https://github.com/Tib3rius/AutoRecon"
+homepage = "https://github.com/initinfosec/AutoRecon"
+repository = "https://github.com/initinfosec/AutoRecon"
 packages = [
 	{include = "autorecon", from = "src"},
 ]
