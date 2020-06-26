@@ -49,7 +49,9 @@ while IFS='' read -r LINE || [ -n "${LINE}" ]; do
 	fi
 done < $scriptReqs
 
-PS3='Install optional tools/extended tool chest ("etc") for autorecon? (The etc toolset currently includes seclists, enum4linux-ng, dirsearch, ffuf, & golang.) : '
+echo -e "\n\nInstall optional tools/extended tool chest ('etc') for autorecon? (The etc toolset currently includes seclists, enum4linux-ng, dirsearch, ffuf, & golang.)\nThese tools are not strictly required for AutoRecon operation, but some commands may fail without them (especially commands in manual_commands.txt).\n\n"
+
+PS3='Install optional tools/extended tool chest ("etc") for autorecon? : '
 options=("install etc tools" "do not install etc tools" "Quit")
 select opt in "${options[@]}"
 do
@@ -158,8 +160,8 @@ pipxInstall () {
 	    
 	    python3 -m pip install --user pipx --no-warn-script-location &> /dev/null
 	    
-	    #exec bash to ensure PATH updates for pipx propogate before continuing further install/config (for some reason source ~/.bashrc doesn't work)
-	    exec $SHELL
+	    #start another bash interactive shell to ensure PATH updates for pipx propogate before continuing further install/config (for some reason source ~/.bashrc doesn't work)
+	    #!/bin/bash -i
 	    python3 -m pipx ensurepath
 	    
 	    #install autorecon using pipx
@@ -179,9 +181,9 @@ do
 	    "pipx - recommended")
             echo -e "\nInstalling via pipx\n"
 	    #pipx AR installation
-	    pipxInstall	 	#call to function to install/configure AR in new login shell so changes are properly applied
-	    echo -e "\nWith pipx, you may need to launch a new shell or re-login after script completion before you start using AutoRecon.\n"
-	    exec $SHELL
+	    pipxInstall	 	#call to function to install/configure AR in fresh shell so changes are properly applied
+	    echo -e "\nAutorecon has been installed with pipx. Loading you into a fresh new shell so updates are applied =).\n"
+	    #!/bin/bash -i
 	    break
             ;;
 
