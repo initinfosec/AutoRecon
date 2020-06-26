@@ -68,10 +68,11 @@ do
 	    "install etc tools")
 
 	    #install seclists if not already there
+	    sleep 1
 	    if which seclists &> /dev/null ; then
-	    	echo -e "\nseclists detected installed, moving on.\n"
+	    	echo -e "\n\nseclists detected installed, moving on.\n"
 	    else
-	    	echo -e "\nseclists not detected, installing...\n(this make take a moment, so please be patient)...\n"
+	    	echo -e "\n\nseclists not detected, installing...\n(this make take a moment, so please be patient)...\n"
 		yes | $SUDO apt install seclists &> /dev/null && echo -e "\nseclists installed.\n"
             fi
 
