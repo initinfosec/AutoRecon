@@ -167,7 +167,7 @@ pipxInstall () {
 	    pipx install --spec git+https://github.com/initinfosec/AutoRecon.git autorecon &> /dev/null
 	    echo="alias autorecon='sudo \$(which autorecon)'" >> ~/.bash_aliases && source ~/.bashrc	#have alias look for location of AR at runtime using sudo
 	    #N.B. if using sudo, may desire to run scans in the following fashion: $autorecon <opts> <target> && sudo chown -R $USER:$USER <ouput_dir>
-	    echo -e "\n\nAutoRecon installed using pipx. Complete!\n" ; echo -e "AutoRecon location: $(which autorecon)\n"'
+	    echo -e "\n\nAutoRecon installed using pipx. Complete!\n" ; echo -e "AutoRecon location: $(which autorecon)\n"
 }
 
 
