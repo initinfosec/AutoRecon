@@ -49,8 +49,6 @@ while IFS='' read -r LINE || [ -n "${LINE}" ]; do
 	fi
 done < $scriptReqs
 
-echo -e "Prerequisiste install checks done, starting autorecon install.\n\n"
-
 PS3='Install optional tools/extended tool chest, "etc," for autorecon? (The etc toolset currently includes seclists, enum4linux-ng, dirsearch, ffuf, & golang.) : '
 options=("install etc tools" "do not install etc tools" "Quit")
 select opt in "${options[@]}"
@@ -146,6 +144,7 @@ do
     esac
 done
 
+echo -e "Prerequisiste install checks done, starting autorecon install.\n\n" && sleep 1
 
 pipxInstall () {
 	    #function to take care of pipx setup & installation of AutoRecon via pipx
@@ -161,8 +160,6 @@ pipxInstall () {
 	    #source .bashrc to propagate PATH updates
 	    source ~/.bashrc
 	    python3 -m pipx ensurepath
-	    
-
 	    
 	    #install autorecon using pipx
 	    echo -e "\nInstalling AutoRecon using pipx, please be patient...\n"
