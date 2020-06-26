@@ -12,10 +12,16 @@ if [[ $EUID -ne 0 ]]; then
 	SUDO='sudo'
 fi
 
-activate () {
-# activate the venv for pipx config in script if needed
-. ../.env/bin/activate
+pipxInstall () {
+# activate the venv via a new bash login shell for pipx config/AR install
+	    #install main autorecon using pipx
+	    pipx install git+https://github.com/Tib3rius/AutoRecon.git &> /dev/null
+	    echo "alias autorecon='sudo $(which autorecon)'" >> ~/.bash_aliases && source ~/.bashrc
+	    source ~/.bashrc
+	    echo -e "\nAutoRecon installed using pipx. Complete!\n"
+	    echo -e "AutoRecon location: $(which autorecon)\n"
 }
+
 echo -e "Checking your system against requirements for AutoRecon. Installing only what you don't have.\n\n"
 sleep 2
 
@@ -54,52 +60,6 @@ while IFS='' read -r LINE || [ -n "${LINE}" ]; do
 done < $scriptReqs
 
 echo -e "Prerequisiste install checks done, installing autorecon.\n"
-
-PS3='Please select your install method for AutoRecon: '
-options=("pipx - recommended" "pip3" "manual as script" "Quit")
-select opt in "${options[@]}"
-do
-    case $opt in
-	    "pipx - recommended")
-            echo -e "\nInstalling via pipx\n"
-	    #pipx setup
-	    python3 -m pip install --user pipx --no-warn-script-location
-	    python3 -m pipx ensurepath
-	    #activate		#activate the venv to properly apply changes when installing AR w/ pipx
-	    #install main autorecon using pipx
-	    pipx install git+https://github.com/Tib3rius/AutoRecon.git &> /dev/null
-	    echo "alias autorecon='sudo $(which autorecon)'" >> ~/.bash_aliases && source ~/.bashrc
-	    source ~/.bashrc
-	    echo -e "\nAutoRecon installed using pipx. Complete!\n"
-	    echo -e "AutoRecon location: $(which autorecon)\n"
-	    echo -e "With pipx, you may need to launch a new shell or re-login after script completion before you start using AutoRecon.\n"
-	    break
-            ;;
-
-        "pip3")
-            echo -e "\nInstalling via pip3"
-	    #install main autorecon using pip3
-	    python3 -m pip install git+https://github.com/Tib3rius/AutoRecon.git &> /dev/null && echo -e "\nAutoRecon installed using pip3. Complete!\n"
-	    break
-            ;;
-
-        "manual as script")
-            echo -e "\nInstalling as a manual script"
-	    #install main autorecon using manual/script method
-	    python3 -m pip install -r requirements.txt &> /dev/null
-	    echo "alias autorecon='sudo python3 $PWD/src/autorecon.py'" >> ~/.bash_aliases && source ~/.bashrc
-	    echo -e "\nAutoRecon installed as a script. Complete!\n"
-	    break
-            ;;
-
-         "Quit")
-	    echo "Exiting..."
-            exit 1
-            ;;
-
-        *) echo "invalid option $REPLY";;
-    esac
-done
 
 PS3='Install optional/extended (etc) tools (seclists, enum4linux-ng, dirsearch, ffuf, & golang) for autorecon? : '
 options=("install etc tools" "do not install etc tools" "Quit")
@@ -195,7 +155,47 @@ do
     esac
 done
 
-#Finish up
+PS3='Please select your install method for AutoRecon: '
+options=("pipx - recommended" "pip3" "manual as script" "Quit")
+select opt in "${options[@]}"
+do
+    case $opt in
+	    "pipx - recommended")
+            echo -e "\nInstalling via pipx\n"
+	    #pipx setup
+	    python3 -m pip install --user pipx --no-warn-script-location
+	    python3 -m pipx ensurepath
+	    bash -l -c pipxInstall	 #activate the venv to properly apply changes when installing AR w/ pipx
+	    echo -e "With pipx, you may need to launch a new shell or re-login after script completion before you start using AutoRecon.\n"
+	    break
+            ;;
+
+        "pip3")
+            echo -e "\nInstalling via pip3"
+	    #install main autorecon using pip3
+	    python3 -m pip install git+https://github.com/Tib3rius/AutoRecon.git &> /dev/null && echo -e "\nAutoRecon installed using pip3. Complete!\n"
+	    break
+            ;;
+
+        "manual as script")
+            echo -e "\nInstalling as a manual script"
+	    #install main autorecon using manual/script method
+	    python3 -m pip install -r requirements.txt &> /dev/null
+	    echo "alias autorecon='sudo python3 $PWD/src/autorecon.py'" >> ~/.bash_aliases && source ~/.bashrc
+	    echo -e "\nAutoRecon installed as a script. Complete!\n"
+	    break
+            ;;
+
+         "Quit")
+	    echo "Exiting..."
+            exit 1
+            ;;
+
+        *) echo "invalid option $REPLY";;
+    esac
+done
+
+#Finish banner
 printf '\n%.s' {1..3}
 printf '========================================================================================='
 printf '\n%.s' {1..3}
