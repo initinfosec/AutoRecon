@@ -13,13 +13,9 @@ if [[ $EUID -ne 0 ]]; then
 fi
 
 pipxInstall () {
-# activate the venv via a new bash login shell for pipx config/AR install
+	    # activate the venv via a new bash login shell for pipx config/AR install
 	    #install main autorecon using pipx
-	    pipx install git+https://github.com/Tib3rius/AutoRecon.git &> /dev/null
-	    echo "alias autorecon='sudo $(which autorecon)'" >> ~/.bash_aliases && source ~/.bashrc
-	    source ~/.bashrc
-	    echo -e "\nAutoRecon installed using pipx. Complete!\n"
-	    echo -e "AutoRecon location: $(which autorecon)\n"
+	    bash -l -c 'pipx install git+https://github.com/Tib3rius/AutoRecon.git &> /dev/null ; echo "alias autorecon='sudo $(which autorecon)'" >> ~/.bash_aliases && source ~/.bashrc ; echo -e "\nAutoRecon installed using pipx. Complete!\n" ; echo -e "AutoRecon location: $(which autorecon)\n"'
 }
 
 echo -e "Checking your system against requirements for AutoRecon. Installing only what you don't have.\n\n"
@@ -59,9 +55,9 @@ while IFS='' read -r LINE || [ -n "${LINE}" ]; do
 	fi
 done < $scriptReqs
 
-echo -e "Prerequisiste install checks done, installing autorecon.\n"
+echo -e "Prerequisiste install checks done, starting autorecon install.\n\n"
 
-PS3='Install optional/extended (etc) tools (seclists, enum4linux-ng, dirsearch, ffuf, & golang) for autorecon? : '
+PS3='Install optional/extended (etc) tools for autorecon? (seclists, enum4linux-ng, dirsearch, ffuf, & golang) : '
 options=("install etc tools" "do not install etc tools" "Quit")
 select opt in "${options[@]}"
 do
@@ -163,9 +159,9 @@ do
 	    "pipx - recommended")
             echo -e "\nInstalling via pipx\n"
 	    #pipx setup
-	    python3 -m pip install --user pipx --no-warn-script-location
+	    python3 -m pip install --user pipx --no-warn-script-location &> /dev/null
 	    python3 -m pipx ensurepath
-	    bash -l -c pipxInstall	 #activate the venv to properly apply changes when installing AR w/ pipx
+	    pipxInstall	 	#call to function to install/configure AR in new login shell so changes are properly applied
 	    echo -e "With pipx, you may need to launch a new shell or re-login after script completion before you start using AutoRecon.\n"
 	    break
             ;;
