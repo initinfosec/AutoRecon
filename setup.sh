@@ -15,8 +15,9 @@ fi
 pipxInstall () {
 	    # activate the venv via a new bash login shell for pipx config/AR install
 	    #install main autorecon using pipx
+	    setAlias="alias autorecon='sudo $(which autorecon)'"
 	    bash -l -c 'pipx install git+https://github.com/Tib3rius/AutoRecon.git &> /dev/null'
-	    bash -l -c 'echo "alias autorecon=\'sudo $(which autorecon)\'" >> ~/.bash_aliases && source ~/.bashrc'
+	    bash -l -c 'echo "$(setAlias)" >> ~/.bash_aliases && source ~/.bashrc'
 	    bash -l -c 'echo -e "\nAutoRecon installed using pipx. Complete!\n" ; echo -e "AutoRecon location: $(which autorecon)\n"'
 }
 
@@ -164,6 +165,7 @@ do
 	    python3 -m pip install --user pipx --no-warn-script-location &> /dev/null
 	    python3 -m pipx ensurepath
 	    pipxInstall	 	#call to function to install/configure AR in new login shell so changes are properly applied
+	    source ~/.bashrc
 	    echo -e "With pipx, you may need to launch a new shell or re-login after script completion before you start using AutoRecon.\n"
 	    break
             ;;
