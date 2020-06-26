@@ -13,7 +13,7 @@ if [[ $EUID -ne 0 ]]; then
 fi
 
 echo -e "Checking your system against requirements for AutoRecon. Installing only what you don't have.\n\n"
-sleep 3
+sleep 2
 
 #general AR setup
 
@@ -22,21 +22,21 @@ sleep 3
 if which python3 &> /dev/null ; then
 	echo -e "python3 detected installed, moving on.\n"
 else
-	echo -e "python3 not detected, installing.\n"
+	echo -e "python3 not detected, installing...\n"
 	yes | $SUDO apt install python3 &> /dev/null && echo -e "python3 installed.\n"
 fi
 
 if which pip3 &> /dev/null ; then
 	echo -e "pip3 detected installed, moving on.\n"
 else
-	echo -e "pip3 not detected, installing.\n"
+	echo -e "pip3 not detected, installing...\n"
 	yes | $SUDO apt install python3-pip &> /dev/null && echo -e "pip3 installed.\n"
 fi
 
 if which svwar &> /dev/null ; then
 	echo -e "svwar detected installed, moving on.\n"
 else
-	echo -e "svwar not detected, installing (from sipvicious.)\n"
+	echo -e "svwar not detected, installing (from sipvicious)...\n"
 	yes | $SUDO apt install sipvicious &> /dev/null && echo -e "svwar installed (from sipvicous.)\n"
 fi
 
@@ -44,7 +44,7 @@ while IFS='' read -r LINE || [ -n "${LINE}" ]; do
 	if which ${LINE} &> /dev/null ; then
 		echo -e "${LINE} detected installed, moving on.\n"
 	else
-		echo -e "${LINE} not detected, installing, please be patient...\n"
+		echo -e "${LINE} not detected, installing...\n"
 		yes | $SUDO apt install ${LINE} &> /dev/null && echo -e "${LINE} installed.\n"
 	fi
 done < $scriptReqs
@@ -106,7 +106,7 @@ do
 	    if which seclists &> /dev/null ; then
 	    	echo -e "\nseclists detected installed, moving on.\n"
 	    else
-	    	echo -e "\nseclists not detected, installing.\nOutput is suppressed - this make take a moment, so please be patient.\n"
+	    	echo -e "\nseclists not detected, installing... (this make take a moment, so please be patient.)\n"
 		yes | $SUDO apt install seclists &> /dev/null && echo -e "\nseclists installed.\n"
             fi
 
@@ -114,7 +114,7 @@ do
 	    if which go &> /dev/null ; then
 	    	echo -e "golang detected installed, moving on.\n"
 	    else
-	    	echo -e "golang not detected, installing, please be patient.\n"
+	    	echo -e "golang not detected, installing...\n"
 		yes | $SUDO apt install golang &> /dev/null && echo -e "\ngolang installed.\n"
             fi
 	    
@@ -122,7 +122,7 @@ do
 	    if which ffuf &> /dev/null ; then 
 	    	echo -e "\nfuff detected installed, moving on.\n"
 	    else
-	    	echo -e "\nInstalling ffuf\n"
+	    	echo -e "\nffuf not detected, installing...\n"
 	        ffufDir="$ARdir/ffuf"
 		mkdir $ffufDir && cd $ffufDir
 		LATEST_VER="$(curl -sI "https://github.com/ffuf/ffuf/releases/latest" | grep -Po 'tag\/\K(v\S+)')"
@@ -139,7 +139,7 @@ do
 	    if which enum4linux-ng &> /dev/null ; then 
 	    	echo -e "\nenum4linux-ng detected installed, moving on.\n"
 	    else
-	        echo -e "\nInstalling enum4linx-ng\n"
+	        echo -e "\nenum4linx-ng not detected, installing...\n"
 	        mkdir enum4linux-ng && cd enum4linux-ng
                 #grab necessary files
 	        wget -q https://raw.githubusercontent.com/cddmp/enum4linux-ng/master/enum4linux-ng.py
@@ -162,7 +162,7 @@ do
 	    if which dirsearch &> /dev/null ; then 
 	    	echo -e "\ndirsearch detected installed, moving on.\n"
 	    else
-	        echo -e "\nInstalling dirsearch\n"
+	        echo -e "\ndirsearch not detected, installing...\n"
 	        git clone https://github.com/maurosoria/dirsearch.git &> /dev/null
 	        $SUDO mv dirsearch /usr/share/
 	        $SUDO ln -s /usr/share/dirsearch/dirsearch.py /usr/bin/dirsearch
@@ -191,10 +191,10 @@ done
 
 #Finish up
 printf '\n%.s' {1..3}
-printf '============================================================================'
+printf '==================================================================================================='
 printf '\n%.s' {1..3}
 echo -e "AutoRecon by Tib3rius installed!   more info at: https://github.com/Tib3rius/AutoRecon\n"
 echo -e "install script/wrapper by @initinfosec\n"
 echo -e "' It's like bowling with bumpers. ' - @ippsec\n\n"
-printf '============================================================================'
+printf '==================================================================================================='
 printf '\n%.s' {1..3}
