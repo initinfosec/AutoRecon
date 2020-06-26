@@ -157,8 +157,9 @@ pipxInstall () {
 	    fi
 	    
 	    python3 -m pip install --user pipx --no-warn-script-location &> /dev/null
-	    #source .bashrc to propagate PATH updates
-	    source ~/.bashrc
+	    
+	    #exec bash to ensure PATH updates for pipx propogate before continuing further install/config (for some reason source ~/.bashrc doesn't work)
+	    exec $SHELL
 	    python3 -m pipx ensurepath
 	    
 	    #install autorecon using pipx
@@ -180,6 +181,7 @@ do
 	    #pipx AR installation
 	    pipxInstall	 	#call to function to install/configure AR in new login shell so changes are properly applied
 	    echo -e "\nWith pipx, you may need to launch a new shell or re-login after script completion before you start using AutoRecon.\n"
+	    exec $SHELL
 	    break
             ;;
 
