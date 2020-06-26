@@ -180,7 +180,6 @@ do
             echo -e "\nInstalling via pipx\n"
 	    #pipx AR installation
 	    pipxInstall	 	#call to function to install/configure AR in new login shell so changes are properly applied
-	    source ~/.bashrc
 	    echo -e "\nWith pipx, you may need to launch a new shell or re-login after script completion before you start using AutoRecon.\n"
 	    break
             ;;
