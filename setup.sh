@@ -163,6 +163,11 @@ do
 	    "pipx - recommended")
             echo -e "\nInstalling via pipx\n"
 	    #pipx setup
+	    if locate venv &> /dev/null ; then
+	    	echo -e "python3-venv detected installed, moving on.\n"
+	    else
+	    	echo -e "python3-venv not detected, installing...\n"
+		yes | $SUDO apt install python3-venv &> /dev/null && echo -e "\npython3-venv installed.\n"
 	    python3 -m pip install --user pipx --no-warn-script-location &> /dev/null
 	    python3 -m pipx ensurepath
 	    pipxInstall	 	#call to function to install/configure AR in new login shell so changes are properly applied
