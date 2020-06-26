@@ -46,13 +46,6 @@ Please find installation instructions for utilizing the script below.
 
 * The setup.sh script doesn't have extensive error checking, and most of stdout on installations is suppressed. Manual toubleshooting may need to be done on failures. Use at your own risk, *et al*.
 
-### To-Do
-
-* Better error checking in script
-* Build function on setup script start that checks for updates to existing installations (and gives options to update)
-* Move enum4linux-ng into required dependencies section for package, or move enum4linux-ng to the manual_commands.txt file if user chooses not to install it.
-* Move files related to setup.sh to their own subfolder?
-
 
 ## Installation:
 
@@ -60,6 +53,14 @@ Please find installation instructions for utilizing the script below.
 * run setup.sh
 * step through menu making choices as necessary
 * confirm installation was successful - if using the pipx install option you will probably need to log out of the shell that ran the script and spawn a new one.
+
+
+### To-Do
+
+* Better error checking in script
+* Build function on setup script start that checks for updates to existing installations (and gives options to update)
+* Move enum4linux-ng into required dependencies section for package, or move enum4linux-ng to the manual_commands.txt file if user chooses not to install it.
+* Move files related to setup.sh to their own subfolder?
 
 ------------------------------------------------------------
 
