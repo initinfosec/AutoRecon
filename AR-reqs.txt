@@ -14,4 +14,3 @@ sslscan
 tnscmd10g
 whatweb
 wkhtmltopdf
-pipx
