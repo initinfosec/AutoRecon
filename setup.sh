@@ -67,7 +67,7 @@ do
 	    python3 -m pipx ensurepath
 	    activate		#activate the venv to properly apply changes when installing AR w/ pipx
 	    #install main autorecon using pipx
-	    pipx install git+https://github.com/Tib3rius/AutoRecon.git" &> /dev/null
+	    pipx install git+https://github.com/Tib3rius/AutoRecon.git &> /dev/null
 	    echo "alias autorecon='sudo $(which autorecon)'" >> ~/.bash_aliases && source ~/.bashrc
 	    source ~/.bashrc
 	    echo -e "\nAutoRecon installed using pipx. Complete!\n"
