@@ -132,13 +132,13 @@ do
 	    ;;
 
         "do not install etc tools")
-            echo -e "skipping install of extra/non-required tools\n"
+            echo -e "\nskipping install of extra/non-required tools\n"
 	    
 	    break
 	    ;;
 
          "Quit")
-	    echo "Exiting..."
+	    echo -e "\nExiting...\n"
             
 	    exit 1
 	    ;;
@@ -216,7 +216,7 @@ do
             ;;
 
          "Quit")
-	    echo "Exiting..."
+	    echo -e "\nExiting...\n"
             exit 1
             ;;
 
