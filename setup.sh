@@ -228,6 +228,7 @@ pipxInstall () {
 	    echo -e "\n\n(If you want to run 'sudo autorecon' explicitly, execute the following as ROOT:\n"
 	    echo -e "echo '${secPath}' >> /etc/sudoers.d/secure_path\n"
 	    echo -e "[***refusing to change your sudo settings programatically!***])\n\n"
+	    echo -e "\n\n * * * * * "
 }
 
 
@@ -249,6 +250,7 @@ pip3Install () {
 	    echo -e "\n\n(If you want to run 'sudo autorecon' explicitly, execute the following as ROOT:\n"
 	    echo -e "echo '${secPath}' >> /etc/sudoers.d/secure_path\n"
 	    echo -e "[***refusing to change your sudo settings programatically!***])\n\n"
+	    echo -e "\n\n * * * * * "
 }
 
 standaloneInstall () {
@@ -261,8 +263,9 @@ standaloneInstall () {
 	    echo -e "\n\n * * * * * "
 	    echo -e "\n\nScript installed at ${ARscript}\n"
 	    echo -e "\nThe script is also installed with & aliased to run with sudo as 'ars', e.g. 'ars <options> <host>'.\n"
-	    echo -e "If you want AutoRecon to always run as root, you can change the alias to: alias autorecon='sudo python3 $ARscript'\n"
+	    echo -e "\nIf you want AutoRecon to always run as root, you can change the alias to: alias autorecon='sudo python3 $ARscript'\n\n"
 	    echo -e "\n\nAutoRecon installed as a manual/standalone script. Complete!\n\n"
+	    echo -e "\n\n * * * * * "
 }
 
 
@@ -301,7 +304,7 @@ finishUp () {
 	
 	cd $ARdir
 	#spawn new shell in case user wants to use the tool right away. Give message about relogin/new shell if any issues.
-	echo -e "\nAutoRecon has been installed. Loading you into a fresh new shell so updates are [hopefully] applied immediately =).\n"
+	echo -e "\n\nAutoRecon has been installed. Loading you into a fresh new shell so updates are [hopefully] applied immediately =).\n"
 	echo -e "You can run AutoRecon from here now if 'autorecon' or 'ars' show proper/expected script output.\n"
 	echo -e "If the commands do not seem to work properly or you have issues, exit the entire TTY/terminal instance and open a new shell to ensure updates from the script are applied.\n\n"
 	
