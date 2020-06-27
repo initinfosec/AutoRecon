@@ -158,7 +158,7 @@ echo -e "\nPrerequisiste install checks done, starting autorecon install.\n\n" &
 
 pipxInstall () {
 	    #function to take care of pipx setup & installation of AutoRecon via pipx
-	    echo -e "\nInstalling AutoRecon using pipx, please be patient...\n"
+	    echo -e "\n\nInstalling AutoRecon using pipx, please be patient...\n"
 	    
 	    #install if pipx if it does not exist on sys
 	    if which pipx &> /dev/null ; then
@@ -176,16 +176,17 @@ pipxInstall () {
 	    #start another bash interactive shell to ensure PATH updates for pipx propogate before continuing further install/config (for some reason source ~/.bashrc doesn't work)
 	    #!/bin/bash -li
 	    sleep 1
-	    echo "alias ars='sudo $(which autorecon)'" >> ~/.bash_aliases && source ~/.bashrc	#have alias look for location of AR at runtime using sudo
+	    echo "alias ars='sudo \$(which autorecon)'" >> ~/.bash_aliases && source ~/.bashrc	#have alias look for location of AR at runtime using sudo
 	    #N.B. if using sudo, may desire to run scans in the following fashion: $sudo autorecon <opts> <target> && sudo chown -R $USER:$USER <ouput_dir>
 	    echo -e "\n\n * * * * * \n\n"
-	    echo -e "\n\nAutoRecon installed using pipx. Complete!\n" ; echo -e "AutoRecon location: $(which autorecon) - you can run from anywhere simply using 'autorecon'"
+	    echo -e "\n\nAutoRecon installed using pipx. Complete!\n"
+	    echo -e "Autorecon is now in your PATH - you can run from anywhere simply using 'autorecon'"
 	    echo -e "\n\nThe script is also installed with & aliased to run with sudo as 'ars', e.g. 'ars <options> <host>', or can also be run simply as 'sudo autorecon'\n"
-	    }
+}
 
 
 pip3Install () {
-	    echo -e "\nInstalling AutoRecon using pip3, please be patient...\n"
+	    echo -e "\n\nInstalling AutoRecon using pip3, please be patient...\n"
 	    python3 -m pip install git+https://github.com/initinfosec/AutoRecon.git --no-warn-script-location &> /dev/null
 	    $SUDO python3 -m pip install git+https://github.com/initinfosec/AutoRecon.git --no-warn-script-location &> /dev/null	#install as sudo tooo in case user wants to run AR with sudo privs
 	    echo -e "\nexport PATH='~/.local/bin:$PATH'" >> ~/.bashrc
@@ -193,10 +194,11 @@ pip3Install () {
 	    #start another bash interactive shell to ensure PATH updates for pip3 propogate before continuing further install/config (for some reason source ~/.bashrc doesn't work)
 	    #!/bin/bash -li
 	    sleep 1
-	    echo "alias ars='sudo $(which autorecon)'" >> ~/.bash_aliases && source ~/.bashrc	#have alias look for location of AR at runtime using sudo
+	    echo "alias ars='sudo \$(which autorecon)'" >> ~/.bash_aliases && source ~/.bashrc	#have alias look for location of AR at runtime using sudo
 	    #N.B. if using sudo, may desire to run scans in the following fashion: $sudo autorecon <opts> <target> && sudo chown -R $USER:$USER <ouput_dir>
 	    echo -e "\n\n * * * * * \n\n"
-	    echo -e "\n\nAutoRecon installed using pip3. Complete!\n" ; echo -e "AutoRecon location: $(which autorecon) - you can run from anywhere simply using 'autorecon'"
+	    echo -e "\n\nAutoRecon installed using pip3. Complete!\n"
+	    echo -e "Autorecon is now in your PATH - you can run from anywhere simply using 'autorecon'"
 	    echo -e "\n\nThe script is also installed with & aliased to run with sudo as 'ars', e.g. 'ars <options> <host>', or can also be run simply as 'sudo autorecon'\n"
 }
 
