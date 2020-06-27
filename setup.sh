@@ -4,9 +4,9 @@
 
 #only tested on kali 2020.x - error checking/input validation is not thorough
 
-echo -e "This is a 'best-effort' installer, only tested on kali 2020.x. While tested, it's not perfect, so manual troubleshooting may be necessary if failure occurs.\n\n"
-echo -e "Would you  like to continue and install AutoRecon by Tib3rius?   ::   more info at: https://github.com/Tib3rius/AutoRecon\n"
-select yn in "Yes" "No"; do
+echo -e "This is a 'best-effort' installer, only tested on kali 2020.x. >anual troubleshooting may be necessary if failure occurs.\n\n"
+echo -e "Would you  like to continue and install AutoRecon by Tib3rius?\nmore info at: https://github.com/Tib3rius/AutoRecon\n"
+select yn in "Yes, install." "No, exit."; do
     case $yn in
         Yes ) echo -e "Proceeding with install.\n"; break;;
         No ) echo -e "\nExiting...\n"; exit 1;;
