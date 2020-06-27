@@ -225,5 +225,8 @@ printf '\n%.s' {1..3}
 #spawn new shell if installed from pipx
 if [ "$newShell" == "yes" ] ; then
 		echo -e "\nAutorecon has been installed with pipx. Loading you into a fresh new shell so updates are applied =).\n\nYou can run autorecon from here. If you exit this session, be sure to open a new terminal instance to ensure updates from the script are applied to your session.\n"
-		#spawn new shell on script exit/bin/bash -li
+		newShell="bash -li"
+else
+		newShell=""
 fi
+newShell
