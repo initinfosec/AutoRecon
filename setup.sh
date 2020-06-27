@@ -4,7 +4,7 @@
 
 #only tested on kali 2020.x - error checking/input validation is not thorough
 
-echo -e "This is a 'best-effort' installer, only tested on kali 2020.x. >anual troubleshooting may be necessary if failure occurs.\n\n"
+echo -e "\nThis is a 'best-effort' installer, only tested on kali 2020.x. Manual troubleshooting may be necessary if failure occurs.\n\n"
 echo -e "Would you  like to continue and install AutoRecon by Tib3rius?\nMore info at: https://github.com/Tib3rius/AutoRecon\n"
 select yn in "Install" "Abort"; do
     case $yn in
