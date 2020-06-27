@@ -1,5 +1,6 @@
 #!/bin/bash
-#simple script to setup AutoRecon
+#script to setup AutoRecon - @initinfosec June 2020
+#it's not pretty but it [mostly] works. iterative improvements will probably be made at some point
 
 #only tested on kali 2020.x - error checking/input validation is not thorough
 setupScript=$(find $PWD -name setup.sh 2>/dev/null)
