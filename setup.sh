@@ -169,7 +169,7 @@ pipxInstall () {
 	    echo "alias sar='sudo \$(which autorecon)'" >> ~/.bash_aliases && source ~/.bashrc	#have alias look for location of AR at runtime using sudo
 	    #N.B. if using sudo, may desire to run scans in the following fashion: $autorecon <opts> <target> && sudo chown -R $USER:$USER <ouput_dir>
 	    echo -e "\n\nAutoRecon installed using pipx. Complete!\n" ; echo -e "AutoRecon location: $(which autorecon) - you can run from anywhere simply using 'autorecon'"
-	    echo -e "\n\nThe script is also aliased to run with sudo as 'sar', e.g. 'sar <options> <host>'\n"
+	    echo -e "\n\nThe script is also aliased to run with sudo as 'sar', e.g. 'sar <options> <host>', or can also be run simply as 'sudo autorecon'\n"
 	    newShell=yes
 }
 
@@ -184,7 +184,7 @@ pip3Install () {
 	    echo "alias sar='sudo \$(which autorecon)'" >> ~/.bash_aliases && source ~/.bashrc	#have alias look for location of AR at runtime using sudo
 	    #N.B. if using sudo, may desire to run scans in the following fashion: $autorecon <opts> <target> && sudo chown -R $USER:$USER <ouput_dir>
 	    echo -e "\n\nAutoRecon installed using pip3. Complete!\n" ; echo -e "AutoRecon location: $(which autorecon) - you can run from anywhere simply using 'autorecon'"
-	    echo -e "\n\nThe script is also aliased to run with sudo as 'sar', e.g. 'sar <options> <host>'\n"
+	    echo -e "\n\nThe script is also aliased to run with sudo as 'sar', e.g. 'sar <options> <host>', or can also be run simply as 'sudo autorecon'\n"
 	    newShell=yes
 }
 
@@ -213,7 +213,7 @@ do
 	    $SUDO python3 -m pip install -r $ARdir/requirements.txt &> /dev/null	#run as sudo too in case want to run AR with root privs
 	    echo "alias autorecon='python3 $ARdir/src/autorecon/autorecon.py'" >> ~/.bash_aliases && source ~/.bashrc
 	    echo "alias sar='sudo python3 $ARdir/src/autorecon/autorecon.py'" >> ~/.bash_aliases && source ~/.bashrc	#alias with sudo in case user wants to run AR as sudo
-	    echo -e "\n\nThe script is also aliased to run with sudo as 'sar', e.g. 'sar <options> <host>'\n"
+	    echo -e "\n\nThe script is also aliased to run with sudo as 'sar', e.g. 'sar <options> <host>', or can also be run simply as 'sudo autorecon'\n"
 	    echo -e "\nAutoRecon installed as a script. Complete!\n"
 	    break
             ;;
