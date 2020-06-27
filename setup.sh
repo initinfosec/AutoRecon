@@ -37,7 +37,7 @@ if which svwar &> /dev/null ; then
 	echo -e "svwar detected installed, moving on.\n"
 else
 	echo -e "svwar not detected, installing (from sipvicious)...\n"
-	yes | $SUDO apt install sipvicious &> /dev/null && echo -e "svwar installed (from sipvicous.)\n"
+	yes | $SUDO apt install sipvicious &> /dev/null && echo -e "svwar installed (from sipvicous).\n"
 fi
 
 while IFS='' read -r LINE || [ -n "${LINE}" ]; do
