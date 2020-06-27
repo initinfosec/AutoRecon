@@ -174,7 +174,7 @@ pipxInstall () {
 
 
 PS3='Please select your install method for AutoRecon: '
-options=("pipx - recommended" "pip3" "manual as script" "Quit")
+options=("pipx - recommended" "pip3" "manual script" "Quit")
 select opt in "${options[@]}"
 do
     case $opt in
@@ -187,14 +187,14 @@ do
             ;;
 
         "pip3")
-            echo -e "\nInstalling via pip3"
+            echo -e "\nInstalling via pip3, please be patient...\n"
 	    #install main autorecon using pip3
 	    python3 -m pip install git+https://github.com/initinfosec/AutoRecon.git &> /dev/null && echo -e "\nAutoRecon installed using pip3. Complete!\n"
 	    break
             ;;
 
-        "manual as script")
-            echo -e "\nInstalling as a manual script"
+        "manual script")
+            echo -e "\nInstalling as a manual script, please be patient...\n"
 	    #install main autorecon using manual/script method
 	    python3 -m pip install -r requirements.txt &> /dev/null
 	    echo "alias autorecon='sudo python3 $PWD/src/autorecon.py'" >> ~/.bash_aliases && source ~/.bashrc
@@ -229,4 +229,4 @@ if [ "$newShell" == "yes" ] ; then
 else
 		newShell=""
 fi
-newShell
+$newShell
