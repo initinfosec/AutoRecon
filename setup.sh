@@ -9,6 +9,7 @@ scriptReqs="$ARdir/AR-reqs.txt"
 ARscript="$ARdir/src/autorecon/autorecon.py"
 binPath="$(echo ~)/.local/bin"
 etcTools="seclists, dirsearch, ffuf, golang, enum4linux-ng"
+secPath='Defaults        secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:${binPath}"'
 
 # check if running with sudo
 if [[ $EUID -ne 0 ]]; then
@@ -178,12 +179,13 @@ pipxInstall () {
 	    #!/bin/bash -li
 	    sleep 1
 	    echo "alias ars='sudo \$(which autorecon)'" >> ~/.bash_aliases && source ~/.bashrc	#have alias look for location of AR at runtime using sudo
-	    $SUDO echo 'Defaults        secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:${binPath}' >> /etc/sudoers.d/secure_path
 	    #N.B. if using sudo, may desire to run scans in the following fashion: $sudo autorecon <opts> <target> && sudo chown -R $USER:$USER <ouput_dir>
 	    echo -e "\n\n * * * * * \n\n"
 	    echo -e "\n\nAutoRecon installed using pipx. Complete!\n"
 	    echo -e "Autorecon is now in your PATH - you can run from anywhere simply using 'autorecon'"
-	    echo -e "\n\nThe script is also installed with & aliased to run with sudo as 'ars', e.g. 'ars <options> <host>', or can also be run simply as 'sudo autorecon'\n"
+	    echo -e "\n\nThe script is also installed with & aliased to run with sudo as 'ars', e.g. 'ars <options> <host>'.\n"
+	    echo -e "If you want to run 'sudo autorecon explicitly, execute the following as ROOT [**refusing to change your sudo settings programatically**]:\n"
+	    echo -e "echo '$secPath >> /etc/sudoers.d/secure_path'\n\n"
 }
 
 
@@ -202,7 +204,9 @@ pip3Install () {
 	    echo -e "\n\n * * * * * \n\n"
 	    echo -e "\n\nAutoRecon installed using pip3. Complete!\n"
 	    echo -e "Autorecon is now in your PATH - you can run from anywhere simply using 'autorecon'"
-	    echo -e "\n\nThe script is also installed with & aliased to run with sudo as 'ars', e.g. 'ars <options> <host>', or can also be run simply as 'sudo autorecon'\n"
+	    echo -e "\n\nThe script is also installed with & aliased to run with sudo as 'ars', e.g. 'ars <options> <host>'.\n"
+	    echo -e "If you want to run 'sudo autorecon explicitly, execute the following as ROOT [**refusing to change your sudo settings programatically**]:\n"
+	    echo -e "echo '$secPath >> /etc/sudoers.d/secure_path'\n\n"
 }
 
 standaloneInstall () {
