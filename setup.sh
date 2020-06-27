@@ -6,7 +6,7 @@
 
 echo -e "This is a 'best-effort' installer, only tested on kali 2020.x. >anual troubleshooting may be necessary if failure occurs.\n\n"
 echo -e "Would you  like to continue and install AutoRecon by Tib3rius?\nMore info at: https://github.com/Tib3rius/AutoRecon\n"
-select yn in "Install." "Abort"; do
+select yn in "Install" "Abort"; do
     case $yn in
         Install ) echo -e "Proceeding with install.\n"; break;;
         Abort ) echo -e "\nExiting...\n"; exit 1;;
