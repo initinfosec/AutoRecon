@@ -161,7 +161,7 @@ pipxInstall () {
 	    python3 -m pip install --user pipx --no-warn-script-location &> /dev/null
 	    
 	    #start another bash interactive shell to ensure PATH updates for pipx propogate before continuing further install/config (for some reason source ~/.bashrc doesn't work)
-	    #!/bin/bash -i
+	    #!/bin/bash -li
 	    python3 -m pipx ensurepath
 	    
 	    #install autorecon using pipx
@@ -182,8 +182,7 @@ do
             echo -e "\nInstalling via pipx\n"
 	    #pipx AR installation
 	    pipxInstall	 	#call to function to install/configure AR in fresh shell so changes are properly applied
-	    echo -e "\nAutorecon has been installed with pipx. Loading you into a fresh new shell so updates are applied =).\n"
-	    #!/bin/bash -i
+	    newShell=yes
 	    break
             ;;
 
@@ -222,3 +221,9 @@ echo "'It's like bowling with bumpers.' - @ippsec"
 printf '\n%.s' {1..2}
 printf '========================================================================================='
 printf '\n%.s' {1..3}
+
+#spawn new shell if installed from pipx
+if [[ $newShell == 'yes' ]] ; then
+		echo -e "\nAutorecon has been installed with pipx. Loading you into a fresh new shell so updates are applied =).\n"
+		#spawn new shell on script exit/bin/bash -li
+fi
