@@ -203,7 +203,6 @@ do
         "pip3")
 	    #install autorecon using pip3
 	    pip3Install		#call to function to install/configure AR in fresh shell so changes are properly applied
-	    newShell=yes
 	    break
             ;;
 
