@@ -49,7 +49,9 @@ while IFS='' read -r LINE || [ -n "${LINE}" ]; do
 	fi
 done < $scriptReqs
 
-echo -e "\n\nInstall optional tools/extended tool chest ('etc') for autorecon? (The etc toolset currently includes seclists, enum4linux-ng, dirsearch, ffuf, & golang.)\nThese tools are not strictly required for AutoRecon operation, but some commands may fail without them (especially commands in manual_commands.txt).\n\n"
+echo -e "\n\nInstall optional tools/extended tool chest ('etc') for autorecon?\n"
+echo -e "\n(The etc toolset currently includes seclists, enum4linux-ng, dirsearch, ffuf, & golang.)\n"
+echo -e "\nThese tools are not strictly required for AutoRecon operation, but some commands may fail without them (especially commands in manual_commands.txt).\n\n"
 
 PS3='Install optional tools/extended tool chest ("etc") for autorecon? : '
 options=("install etc tools" "do not install etc tools" "Quit")
@@ -110,8 +112,7 @@ do
 	        $SUDO cp enum4linux-ng.py /usr/bin/enum4linux-ng
 	        $SUDO chmod +x /usr/bin/enum4linux-ng
 	        #cleanup
-	        cd $ARdir
-	        rm -rf enum4linux-ng*
+	        cd $ARdir && rm -rf enum4linux-ng*
 	        echo -e "\nenum4linux-ng installed.\n"
 	   fi
 
