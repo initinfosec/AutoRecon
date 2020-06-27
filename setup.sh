@@ -92,10 +92,10 @@ do
 		mkdir $ffufDir && cd $ffufDir
 		LATEST_VER="$(curl -sI "https://github.com/ffuf/ffuf/releases/latest" | grep -Po 'tag\/\K(v\S+)')"
 		relNum="${LATEST_VER:1}"
-		binURL="https://github.com/ffuf/ffuf/releases/download/${LATEST_VER}/ffuf_${relNum}_linux_amd64.tar.gz"
-		ffufBin="ffuf_${relNum}_linux_amd64.tar.gz"
+		pkgURL="https://github.com/ffuf/ffuf/releases/download/${LATEST_VER}/ffuf_${relNum}_linux_amd64.tar.gz"
+		ffufPkg="ffuf_${relNum}_linux_amd64.tar.gz"
 		wget -q "$binURL"
-		tar xvzf "$ffufBin" &> /dev/null && rm "$ffufBin"
+		tar xvzf "$ffufPkg" &> /dev/null && rm "$ffufPkg"
 		$SUDO mv $ffufDir /usr/share/ && $SUDO ln -s /usr/share/ffuf/ffuf /usr/bin/ffuf && echo -e "\nffuf installed.\n"
 		cd $ARdir
 	    fi
@@ -105,7 +105,8 @@ do
 	    	echo -e "\nenum4linux-ng detected installed, moving on.\n"
 	    else
 	        echo -e "\nenum4linux-ng not detected, installing...\n(this make take a moment, so please be patient)...\n"
-	        mkdir enum4linux-ng && cd enum4linux-ng
+	        e4lngDir="$ARdir/enum4linux-ng"
+		mkdir $e4lngDir && cd $e4lngDir
                 #grab necessary files
 	        wget -q https://raw.githubusercontent.com/cddmp/enum4linux-ng/master/enum4linux-ng.py
                 wget -q https://raw.githubusercontent.com/cddmp/enum4linux-ng/master/requirements.txt
@@ -113,12 +114,12 @@ do
 	        #install deps
 	        yes | $SUDO apt install smbclient python3-ldap3 python3-yaml python3-impacket  &> /dev/null
 	        /usr/bin/pip3 install -r requirements.txt  &> /dev/null
-
+		$SUDO /usr/bin/pip3 install -r requirements.txt  &> /dev/null	#install as sudo in case needed when running sudo autorecon
 	        #set to $PATH (vs trying to find where user installed & sourcing that dir)
 	        $SUDO cp enum4linux-ng.py /usr/bin/enum4linux-ng
 	        $SUDO chmod +x /usr/bin/enum4linux-ng
 	        #cleanup
-	        cd $ARdir && rm -rf enum4linux-ng*
+	        cd $ARdir && rm -rf $e4lngDir
 	        echo -e "\nenum4linux-ng installed.\n"
 	   fi
 
