@@ -13,6 +13,7 @@ select yn in "Install" "Abort"; do
     esac
 done
 
+# global vars
 setupScript=$(find $PWD -name setup.sh 2>/dev/null)
 ARdir="$(dirname -- "$setupScript")"
 scriptReqs="$ARdir/AR-reqs.txt"
@@ -28,131 +29,155 @@ if [[ $EUID -ne 0 ]]; then
 	sleep 1
 fi
 
-echo -e "\nChecking your system against requirements for AutoRecon. Installing only what you don't have.\n\n"
-sleep 2
-
-#general AR setup
-
-# search for req pkgs on the system
-
-if which python3 &> /dev/null ; then
-	echo -e "python3 detected installed, moving on.\n"
-else
-	echo -e "python3 not detected, installing...\n"
-	yes | $SUDO apt install python3 &> /dev/null && echo -e "python3 installed.\n"
-fi
-
-if which pip3 &> /dev/null ; then
-	echo -e "pip3 detected installed, moving on.\n"
-else
-	echo -e "pip3 not detected, installing...\n"
-	yes | $SUDO apt install python3-pip &> /dev/null && echo -e "pip3 installed.\n"
-fi
-
-if which svwar &> /dev/null ; then
-	echo -e "svwar detected installed, moving on.\n"
-else
-	echo -e "svwar not detected, installing (from sipvicious)...\n"
-	yes | $SUDO apt install sipvicious &> /dev/null && echo -e "svwar installed (from sipvicous).\n"
-fi
-
-while IFS='' read -r LINE || [ -n "${LINE}" ]; do
-	if which ${LINE} &> /dev/null ; then
-		echo -e "${LINE} detected installed, moving on.\n"
+reqsInstall () {
+	echo -e "\nChecking your system against requirements for AutoRecon. Installing only what you don't have.\n\n"
+	sleep 2
+	# search for req pkgs on the system
+	if which python3 &> /dev/null ; then
+		echo -e "python3 detected installed, moving on.\n"
 	else
-		echo -e "${LINE} not detected, installing...\n"
-		yes | $SUDO apt install ${LINE} &> /dev/null && echo -e "${LINE} installed.\n"
+		echo -e "python3 not detected, installing...\n"
+		yes | $SUDO apt install python3 &> /dev/null && echo -e "python3 installed.\n"
 	fi
-done < $scriptReqs
 
-echo -e "\n\nInstall optional tools/extended tool chest ['etc'] for autorecon?\n"
-echo -e "\n(The etc toolset currently includes: ${etcTools}.)\n"
-echo -e "\nThese tools are not strictly required for AutoRecon operation, but some commands may fail without them (especially commands in manual_commands.txt).\n\n"
+	if which pip3 &> /dev/null ; then
+		echo -e "pip3 detected installed, moving on.\n"
+	else
+		echo -e "pip3 not detected, installing...\n"
+		yes | $SUDO apt install python3-pip &> /dev/null && echo -e "pip3 installed.\n"
+	fi
 
-PS3='Install optional tools/extended tool chest ["etc"] for autorecon? : '
-options=("install etc tools" "do not install etc tools" "Quit")
-select opt in "${options[@]}"
-do
-    case $opt in
-	    "install etc tools")
+	if which svwar &> /dev/null ; then
+		echo -e "svwar detected installed, moving on.\n"
+	else
+		echo -e "svwar not detected, installing (from sipvicious)...\n"
+		yes | $SUDO apt install sipvicious &> /dev/null && echo -e "svwar installed (from sipvicous).\n"
+	fi
 
-	    echo -e "\n\nInstalling extended tool chest ['etc'] for autorecon...\n"
-	    
-	    #install seclists if not already there
-	    sleep 1
-	    if which seclists &> /dev/null ; then
-	    	echo -e "\nseclists detected installed, moving on.\n\n"
-	    else
-	    	echo -e "\nseclists not detected, installing...\n(this make take a moment, so please be patient)...\n"
+	while IFS='' read -r LINE || [ -n "${LINE}" ]; do
+		if which ${LINE} &> /dev/null ; then
+			echo -e "${LINE} detected installed, moving on.\n"
+		else
+			echo -e "${LINE} not detected, installing...\n"
+			yes | $SUDO apt install ${LINE} &> /dev/null && echo -e "${LINE} installed.\n"
+		fi
+	done < $scriptReqs
+}
+
+
+# Run installer for base required pkgs
+reqsInstall
+
+etcInstall () {
+	# function to install etc/extended tool chest
+	echo -e "\n\nInstalling extended tool chest ['etc'] for autorecon...\n"
+	sleep 1
+	    	
+	#install seclists if not already there
+	if which seclists &> /dev/null ; then
+    		echo -e "\nseclists detected installed, moving on.\n\n"
+    	else
+    		echo -e "\nseclists not detected, installing...\n(this make take a moment, so please be patient)...\n"
 		yes | $SUDO apt install seclists &> /dev/null && echo -e "\nseclists installed.\n"
-            fi
+       	fi
 
-	    #install golang if not already there
-	    if which go &> /dev/null ; then
-	    	echo -e "\ngolang detected installed, moving on.\n"
-	    else
-	    	echo -e "\ngolang not detected, installing...\n(this make take a moment, so please be patient)...\n"
+    	#install golang if not already there
+    	if which go &> /dev/null ; then
+    		echo -e "\ngolang detected installed, moving on.\n"
+    	else
+    		echo -e "\ngolang not detected, installing...\n(this make take a moment, so please be patient)...\n"
 		yes | $SUDO apt install golang &> /dev/null && echo -e "\ngolang installed.\n"
-            fi
+       	fi
 	    
-	    #install ffuf if not on system
-	    if which ffuf &> /dev/null ; then 
-	    	echo -e "\nfuff detected installed, moving on.\n"
-	    else
-	    	echo -e "\nffuf not detected, installing...\n"
-	        ffufDir="$ARdir/ffuf"
+    	#install ffuf if not on system
+    	if which ffuf &> /dev/null ; then 
+    		echo -e "\nfuff detected installed, moving on.\n"
+    	else
+    		echo -e "\nffuf not detected, installing...\n"
+        	ffufDir="$ARdir/ffuf"
 		mkdir $ffufDir && cd $ffufDir
 		LATEST_VER="$(curl -sI "https://github.com/ffuf/ffuf/releases/latest" | grep -Po 'tag\/\K(v\S+)')"
 		relNum="${LATEST_VER:1}"
 		pkgURL="https://github.com/ffuf/ffuf/releases/download/${LATEST_VER}/ffuf_${relNum}_linux_amd64.tar.gz"
 		ffufPkg="ffuf_${relNum}_linux_amd64.tar.gz"
-		wget -q "$binURL"
+		wget -q "$pkgURL"
 		tar xvzf "$ffufPkg" &> /dev/null && rm "$ffufPkg"
-		$SUDO mv $ffufDir /usr/share/ && $SUDO ln -s /usr/share/ffuf/ffuf /usr/bin/ffuf && echo -e "\nffuf installed.\n"
+		$SUDO mv $ffufDir /usr/share/ && $SUDO ln -s /usr/share/ffuf/ffuf /usr/bin/ffuf
+		if which enum4linux-ng &> /dev/null ; then 
+    			echo -e "\nffuf successfully installed.\n"
+    		else
+        		echo -e "\nenum4linux-ng install failed or didn't link to \$PATH. Moving on, but please investigate.\n"
+		fi	
 		cd $ARdir
-	    fi
+    	fi
 	    
-	    #enum4linux-ng installation if not on system
-	    if which enum4linux-ng &> /dev/null ; then 
-	    	echo -e "\nenum4linux-ng detected installed, moving on.\n"
-	    else
-	        echo -e "\nenum4linux-ng not detected, installing...\n(this make take a moment, so please be patient)...\n"
-	        e4lngDir="$ARdir/enum4linux-ng"
+    	#enum4linux-ng installation if not on system
+    	if which enum4linux-ng &> /dev/null ; then 
+    		echo -e "\nenum4linux-ng detected installed, moving on.\n"
+    	else
+        	echo -e "\nenum4linux-ng not detected, installing...\n(this make take a moment, so please be patient)...\n"
+        	e4lngDir="$ARdir/enum4linux-ng"
 		mkdir $e4lngDir && cd $e4lngDir
-                #grab necessary files
-	        wget -q https://raw.githubusercontent.com/cddmp/enum4linux-ng/master/enum4linux-ng.py
-                wget -q https://raw.githubusercontent.com/cddmp/enum4linux-ng/master/requirements.txt
+               	#grab necessary files
+        	wget -q https://raw.githubusercontent.com/cddmp/enum4linux-ng/master/enum4linux-ng.py
+               	wget -q https://raw.githubusercontent.com/cddmp/enum4linux-ng/master/requirements.txt
 	    
 	        #install deps
 	        yes | $SUDO apt install smbclient python3-ldap3 python3-yaml python3-impacket  &> /dev/null
-	        /usr/bin/pip3 install -r requirements.txt  &> /dev/null
+        	/usr/bin/pip3 install -r requirements.txt  &> /dev/null
 		$SUDO /usr/bin/pip3 install -r requirements.txt  &> /dev/null	#install as sudo in case needed when running sudo autorecon
-	        #set to $PATH (vs trying to find where user installed & sourcing that dir)
-	        $SUDO cp enum4linux-ng.py /usr/bin/enum4linux-ng
-	        $SUDO chmod +x /usr/bin/enum4linux-ng
-	        #cleanup
-	        cd $ARdir && rm -rf $e4lngDir
-	        echo -e "\nenum4linux-ng installed.\n"
-	   fi
+        	#set to $PATH (vs trying to find where user installed & sourcing that dir)
+        	$SUDO cp enum4linux-ng.py /usr/bin/enum4linux-ng
+        	$SUDO chmod +x /usr/bin/enum4linux-ng
+        	sleep 1
+		if which enum4linux-ng &> /dev/null ; then 
+    			echo -e "\nenum4linux-ng successfully installed.\n"
+			cd $ARdir && rm -rf $e4lngDir		#cleanup
+    		else
+        		echo -e "\nenum4linux-ng install failed or didn't link to \$PATH. Moving on, but please investigate.\n"
+			cd $ARdir				#leave $e4lngDir there in case troubleshooting is necessary
+		fi	
+   	fi
 
-	    #dirsearch installation if not on system
-	    if which dirsearch &> /dev/null ; then 
-	    	echo -e "\ndirsearch detected installed, moving on.\n"
-	    else
-	        echo -e "\ndirsearch not detected, installing...\n"
-	        git clone https://github.com/maurosoria/dirsearch.git &> /dev/null
-	        $SUDO mv dirsearch /usr/share/
-	        $SUDO ln -s /usr/share/dirsearch/dirsearch.py /usr/bin/dirsearch
-	        echo -e "\ndirsearch installed\n"
-                cd $ARdir
-	    fi
+    	#dirsearch installation if not on system
+    	if which dirsearch &> /dev/null ; then 
+    		echo -e "\ndirsearch detected installed, moving on.\n"
+    	else
+        	echo -e "\ndirsearch not detected, installing...\n"
+        	git clone https://github.com/maurosoria/dirsearch.git &> /dev/null
+        	$SUDO mv dirsearch /usr/share/
+        	$SUDO ln -s /usr/share/dirsearch/dirsearch.py /usr/bin/dirsearch
+		sleep 1
+		if which dirsearch &> /dev/null ; then 
+    			echo -e "\ndirsearch successfully installed.\n"
+    		else
+        		echo -e "\ndirsearch install failed or didn't link to \$PATH. Moving on, but please investigate.\n"
+		fi
+               	cd $ARdir
+    	fi
+}
 
+
+#prompt user if they want to install etc tools for AR
+
+echo -e "\n\nInstall optional tools/extended tool chest ['etc'] for AutoRecon?\n"
+echo -e "\n(The etc toolset currently includes: ${etcTools}.)\n"
+echo -e "\nThese tools are not strictly required for AutoRecon operation, but some commands may fail without them (especially commands in manual_commands.txt).\n\n"
+
+PS3='Install optional tools/extended tool chest ["etc"] for AutoRecon? : '
+options=("Install etc tools" "Do NOT install etc tools" "Quit")
+select opt in "${options[@]}"
+do
+    case $opt in
+    	"Install etc tools")
+    	    etcInstall		#call to function to install etc tools
+	    
 	    break
 	    ;;
 
-        "do not install etc tools")
+        "Do NOT install etc tools")
             echo -e "\nskipping install of extra/non-required tools\n"
-	    
+	    			# do nothing/move on
 	    break
 	    ;;
 
@@ -166,6 +191,8 @@ do
     esac
 done
 
+
+# main AutoRecon installation
 echo -e "\nPrerequisiste install checks done, starting AutoRecon install...\n\n" && sleep 1
 
 pipxInstall () {
@@ -266,6 +293,8 @@ do
 done
 
 finishUp () {
+	
+	cd $ARdir
 	#spawn new shell in case user wants to use the tool right away. Give message about relogin/new shell if any issues.
 	echo -e "\nAutoRecon has been installed. Loading you into a fresh new shell so updates are [hopefully] applied immediately =).\n"
 	echo -e "You can run AutoRecon from here now if 'autorecon' or 'ars' show proper/expected script output.\n"
