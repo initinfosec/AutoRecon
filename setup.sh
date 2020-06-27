@@ -49,7 +49,7 @@ while IFS='' read -r LINE || [ -n "${LINE}" ]; do
 	fi
 done < $scriptReqs
 
-echo -e "\n\nInstall optional tools/extended tool chest ('etc') for autorecon?\n"
+echo -e "\n\nInstall optional tools/extended tool chest ['etc'] for autorecon?\n"
 echo -e "\n(The etc toolset currently includes seclists, enum4linux-ng, dirsearch, ffuf, & golang.)\n"
 echo -e "\nThese tools are not strictly required for AutoRecon operation, but some commands may fail without them (especially commands in manual_commands.txt).\n\n"
 
