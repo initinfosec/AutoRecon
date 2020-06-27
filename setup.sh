@@ -163,7 +163,7 @@ pipxInstall () {
 	    
 	    #start another bash interactive shell to ensure PATH updates for pipx propogate before continuing further install/config (for some reason source ~/.bashrc doesn't work)
 	    #!/bin/bash -li
-	    python3 -m pipx ensurepath
+	    python3 -m pipx ensurepath &> /dev/null
 	    
 	    #install autorecon using pipx
 	    echo -e "\nInstalling AutoRecon using pipx, please be patient...\n"
@@ -180,7 +180,7 @@ pip3Install () {
 	    python3 -m pip install git+https://github.com/initinfosec/AutoRecon.git --no-warn-script-location &> /dev/null
 	    export PATH=$PATH:~/.local/bin   
 	    #start another bash interactive shell to ensure PATH updates for pip3 propogate before continuing further install/config (for some reason source ~/.bashrc doesn't work)
-	    #!/bin/bash -li
+	    
 	    echo "alias autorecon='sudo \$(which autorecon)'" >> ~/.bash_aliases && source ~/.bashrc	#have alias look for location of AR at runtime using sudo
 	    #N.B. if using sudo, may desire to run scans in the following fashion: $autorecon <opts> <target> && sudo chown -R $USER:$USER <ouput_dir>
 	    echo -e "\n\nAutoRecon installed using pip3. Complete!\n" ; echo -e "AutoRecon location: $(which autorecon) - you can run from anywhere simply using 'autorecon'"
