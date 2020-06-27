@@ -12,7 +12,7 @@ if [[ $EUID -ne 0 ]]; then
 	SUDO='sudo'
 fi
 
-echo -e "Checking your system against requirements for AutoRecon. Installing only what you don't have.\n\n"
+echo -e "\nChecking your system against requirements for AutoRecon. Installing only what you don't have.\n\n"
 sleep 2
 
 #general AR setup
@@ -153,9 +153,9 @@ pipxInstall () {
 	    #function to take care of pipx setup & installation of AutoRecon via pipx
 	    #install if pipx if it does not exist on sys
 	    if which pipx &> /dev/null ; then
-	    	echo -e "\npipx detected installed, moving on.\n"
+	    	echo -e "\n\npipx detected installed, moving on.\n"
 	    else
-	    	echo -e "\npipx not detected, installing...\n"
+	    	echo -e "\n\npipx not detected, installing...\n"
 		yes | $SUDO apt install pipx &> /dev/null && echo -e "\npipx installed.\n"
 	    fi
 	    
