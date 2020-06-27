@@ -53,7 +53,7 @@ echo -e "\n\nInstall optional tools/extended tool chest ('etc') for autorecon?\n
 echo -e "\n(The etc toolset currently includes seclists, enum4linux-ng, dirsearch, ffuf, & golang.)\n"
 echo -e "\nThese tools are not strictly required for AutoRecon operation, but some commands may fail without them (especially commands in manual_commands.txt).\n\n"
 
-PS3='Install optional tools/extended tool chest ("etc") for autorecon? : '
+PS3='Install optional tools/extended tool chest ["etc"] for autorecon? : '
 options=("install etc tools" "do not install etc tools" "Quit")
 select opt in "${options[@]}"
 do
