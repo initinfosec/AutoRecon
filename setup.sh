@@ -3,13 +3,23 @@
 #it's not pretty but it [mostly] works. iterative improvements will probably be made at some point.
 
 #only tested on kali 2020.x - error checking/input validation is not thorough
+
+echo -e "This is a 'best-effort' installer, only tested on kali 2020.x. While tested, it's not perfect, so manual troubleshooting may be necessary if failure occurs.\n\n"
+echo -e "Would you  like to continue and install AutoRecon by Tib3rius?   ::   more info at: https://github.com/Tib3rius/AutoRecon\n"
+select yn in "Yes" "No"; do
+    case $yn in
+        Yes ) echo -e "Proceeding with install.\n"; break;;
+        No ) echo -e "\nExiting...\n"; exit 1;;
+    esac
+done
+
 setupScript=$(find $PWD -name setup.sh 2>/dev/null)
 ARdir="$(dirname -- "$setupScript")"
 scriptReqs="$ARdir/AR-reqs.txt"
 ARscript="$ARdir/src/autorecon/autorecon.py"
 binPath="$HOME/.local/bin"
 etcTools="seclists, dirsearch, ffuf, golang, enum4linux-ng"
-secPath='Defaults        secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:${binPath}"'
+secPath="Defaults        secure_path=\"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:${binPath}\""
 
 # check if running with sudo
 if [[ $EUID -ne 0 ]]; then
