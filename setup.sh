@@ -170,6 +170,7 @@ pipxInstall () {
 		yes | $SUDO apt install pipx &> /dev/null && echo -e "\npipx installed.\n"
 	    fi
 	    
+	    echo -e "Configuring AutoRecon via pipx...\n"
 	    python3 -m pip install --user pipx --no-warn-script-location &> /dev/null
 	    python3 -m pipx ensurepath &> /dev/null
 	    
@@ -182,10 +183,10 @@ pipxInstall () {
 	    #N.B. if using sudo, may desire to run scans in the following fashion: $sudo autorecon <opts> <target> && sudo chown -R $USER:$USER <ouput_dir>
 	    echo -e "\n\n * * * * * \n\n"
 	    echo -e "\n\nAutoRecon installed using pipx. Complete!\n"
-	    echo -e "Autorecon is now in your PATH - you can run from anywhere simply using 'autorecon'"
-	    echo -e "\n\nThe script is also installed with & aliased to run with sudo as 'ars', e.g. 'ars <options> <host>'.\n"
-	    echo -e "If you want to run 'sudo autorecon explicitly, execute the following as ROOT [**refusing to change your sudo settings programatically**]:\n"
-	    echo -e "echo '$secPath >> /etc/sudoers.d/secure_path'\n\n"
+	    echo -e "AutoRecon is now in your PATH - you can run from anywhere simply using 'autorecon'"
+	    echo -e "If you want to run 'sudo autorecon' explicitly, execute the following as ROOT:\n"
+	    echo -e "echo '$secPath >> /etc/sudoers.d/secure_path'\n"
+	    echo -e "[***refusing to change your sudo settings programatically!***]\n\n"
 }
 
 
@@ -203,10 +204,11 @@ pip3Install () {
 	    #N.B. if using sudo, may desire to run scans in the following fashion: $sudo autorecon <opts> <target> && sudo chown -R $USER:$USER <ouput_dir>
 	    echo -e "\n\n * * * * * \n\n"
 	    echo -e "\n\nAutoRecon installed using pip3. Complete!\n"
-	    echo -e "Autorecon is now in your PATH - you can run from anywhere simply using 'autorecon'"
+	    echo -e "AutoRecon is now in your PATH - you can run from anywhere simply using 'autorecon'"
 	    echo -e "\n\nThe script is also installed with & aliased to run with sudo as 'ars', e.g. 'ars <options> <host>'.\n"
-	    echo -e "If you want to run 'sudo autorecon explicitly, execute the following as ROOT [**refusing to change your sudo settings programatically**]:\n"
-	    echo -e "echo '$secPath >> /etc/sudoers.d/secure_path'\n\n"
+	    echo -e "If you want to run 'sudo autorecon' explicitly, execute the following as ROOT:\n"
+	    echo -e "echo '$secPath >> /etc/sudoers.d/secure_path'\n"
+	    echo -e "[***refusing to change your sudo settings programatically!***]\n\n"
 }
 
 standaloneInstall () {
@@ -256,8 +258,8 @@ done
 
 finishUp () {
 	#spawn new shell in case user wants to use the tool right away. Give message about relogin/new shell if any issues.
-	echo -e "\nAutorecon has been installed. Loading you into a fresh new shell so updates are [hopefully] applied immediately =).\n"
-	echo -e "You can run autorecon from here now if 'autorecon' or 'ars' show proper/expected script output.\n"
+	echo -e "\nAutoRecon has been installed. Loading you into a fresh new shell so updates are [hopefully] applied immediately =).\n"
+	echo -e "You can run AutoRecon from here now if 'autorecon' or 'ars' show proper/expected script output.\n"
 	echo -e "If the commands do not seem to work properly or you have issues, exit the entire TTY/terminal instance and open a new shell to ensure updates from the script are applied.\n\n"
 	
 	#Completion banner
