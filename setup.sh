@@ -10,7 +10,7 @@ scriptReqs="$ARdir/AR-reqs.txt"
 if [[ $EUID -ne 0 ]]; then
 	echo -e "\nYou're not running as sudo or root. This script will need sudo/root privs for portions of the install actions. You may be prompted for your password if installs need to be made.\n\n"
 	SUDO='sudo'
-	sleep 2
+	sleep 1
 fi
 
 echo -e "\nChecking your system against requirements for AutoRecon. Installing only what you don't have.\n\n"
