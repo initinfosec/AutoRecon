@@ -253,7 +253,7 @@ done
 finishUp () {
 	#spawn new shell in case user wants to use the tool right away. Give message about relogin/new shell if any issues.
 	echo -e "\nAutorecon has been installed. Loading you into a fresh new shell so updates are [hopefully] applied immediately =).\n"
-	echo -e "You can run autorecon from here now if 'autorecon' or 'ars' show proper script output.\n"
+	echo -e "You can run autorecon from here now if 'autorecon' or 'ars' show proper/expected script output.\n"
 	echo -e "If the commands do not seem to work properly or you have issues, exit the entire TTY/terminal instance and open a new shell to ensure updates from the script are applied.\n\n"
 	
 	#Completion banner
