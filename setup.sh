@@ -187,17 +187,19 @@ do
             ;;
 
         "pip3")
-            echo -e "\nInstalling via pip3, please be patient...\n"
+            echo -e "\nInstalling AutoRecon via pip3, please be patient...\n"
 	    #install main autorecon using pip3
-	    python3 -m pip install git+https://github.com/initinfosec/AutoRecon.git &> /dev/null && echo -e "\nAutoRecon installed using pip3. Complete!\n"
+	    python3 -m pip install git+https://github.com/initinfosec/AutoRecon.git --no-warn-script-location &> /dev/null
+	    export PATH=$PATH:~/.local/bin
+	    echo -e "\nAutoRecon installed using pip3. Complete!\nAutorecon located at $(which autorecon) - path is added to your user profile, so you can run 'autorecon' from anywhere.\n"
 	    break
             ;;
 
         "manual script")
-            echo -e "\nInstalling as a manual script, please be patient...\n"
+            echo -e "\nInstalling AutoRecon a manual/standalone script, please be patient...\n"
 	    #install main autorecon using manual/script method
 	    python3 -m pip install -r requirements.txt &> /dev/null
-	    echo "alias autorecon='sudo python3 $PWD/src/autorecon.py'" >> ~/.bash_aliases && source ~/.bashrc
+	    echo "alias autorecon='sudo python3 $ARdir/src/autorecon/autorecon.py'" >> ~/.bash_aliases && source ~/.bashrc
 	    echo -e "\nAutoRecon installed as a script. Complete!\n"
 	    break
             ;;
