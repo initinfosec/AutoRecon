@@ -131,7 +131,7 @@ do
 	        git clone https://github.com/maurosoria/dirsearch.git &> /dev/null
 	        $SUDO mv dirsearch /usr/share/
 	        $SUDO ln -s /usr/share/dirsearch/dirsearch.py /usr/bin/dirsearch
-	        echo -e "\nDirsearch installed\n"
+	        echo -e "\ndirsearch installed\n"
                 cd $ARdir
 	    fi
 
