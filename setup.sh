@@ -199,7 +199,7 @@ do
         "manual script")
             echo -e "\nInstalling AutoRecon a manual/standalone script, please be patient...\n"
 	    #install main autorecon using manual/script method
-	    python3 -m pip install -r requirements.txt &> /dev/null
+	    python3 -m pip install -r $ARdir/requirements.txt &> /dev/null
 	    echo "alias autorecon='sudo python3 $ARdir/src/autorecon/autorecon.py'" >> ~/.bash_aliases && source ~/.bashrc
 	    echo -e "\nAutoRecon installed as a script. Complete!\n"
 	    break
