@@ -174,6 +174,8 @@ pipxInstall () {
 	    pipx install --spec git+https://github.com/initinfosec/AutoRecon.git autorecon &> /dev/null
 	    echo "alias ars='sudo $(which autorecon)'" >> ~/.bash_aliases && source ~/.bashrc	#have alias look for location of AR at runtime using sudo
 	    #N.B. if using sudo, may desire to run scans in the following fashion: $sudo autorecon <opts> <target> && sudo chown -R $USER:$USER <ouput_dir>
+	    printf '\n%.s' {1..3}
+	    echo -e "\n     * * * * *     \n"
 	    echo -e "\n\nAutoRecon installed using pipx. Complete!\n" ; echo -e "AutoRecon location: $(which autorecon) - you can run from anywhere simply using 'autorecon'"
 	    echo -e "\n\nThe script is also installed with & aliased to run with sudo as 'ars', e.g. 'ars <options> <host>', or can also be run simply as 'sudo autorecon'\n"
 }
@@ -189,6 +191,8 @@ pip3Install () {
 	    #!/bin/bash -li
 	    echo "alias ars='sudo $(which autorecon)'" >> ~/.bash_aliases && source ~/.bashrc	#have alias look for location of AR at runtime using sudo
 	    #N.B. if using sudo, may desire to run scans in the following fashion: $sudo autorecon <opts> <target> && sudo chown -R $USER:$USER <ouput_dir>
+	    printf '\n%.s' {1..3}
+	    echo -e "\n     * * * * *     \n"
 	    echo -e "\n\nAutoRecon installed using pip3. Complete!\n" ; echo -e "AutoRecon location: $(which autorecon) - you can run from anywhere simply using 'autorecon'"
 	    echo -e "\n\nThe script is also installed with & aliased to run with sudo as 'ars', e.g. 'ars <options> <host>', or can also be run simply as 'sudo autorecon'\n"
 }
@@ -200,6 +204,8 @@ standaloneInstall () {
 	    $SUDO python3 -m pip install -r $ARdir/requirements.txt &> /dev/null	#run as sudo too in case want to run AR with root privs
 	    echo "alias autorecon='python3 ${ARscript}'" >> ~/.bash_aliases && source ~/.bashrc
 	    echo "alias ars='sudo python3 ${ARscript}'" >> ~/.bash_aliases && source ~/.bashrc	#alias with sudo in case user wants to run AR as sudo
+	    printf '\n%.s' {1..3}
+	    echo -e "\n     * * * * *     \n"	
 	    echo -e "\nScript installed at ${ARscript}\n"
 	    echo -e "\nThe script is also installed with & aliased to run with sudo as 'ars', e.g. 'ars <options> <host>', or can also be run simply as 'sudo autorecon'\n"
 	    echo -e "\n\nAutoRecon installed as a manual/standalone script. Complete!\n\n"
@@ -237,23 +243,24 @@ do
     esac
 done
 
-newShell () {
+finishUp () {
 	#spawn new shell in case user wants to use the tool right away. Give message about relogin/new shell if any issues.
 	echo -e "\nAutorecon has been installed. Loading you into a fresh new shell so updates are [hopefully] applied immediately =).\n"
 	echo -e "You can run autorecon from here now if 'autorecon' or 'ars' show proper script output.\n"
 	echo -e "If the commands do not seem to work properly or you have issues, exit the entire TTY/terminal instance and open a new shell to ensure updates from the script are applied.\n\n"
+	
+	#Completion banner
+	printf '\n%.s' {1..3}
+	printf '============================================================================================='
+	printf '\n%.s' {1..3}
+	echo -e "AutoRecon by Tib3rius installed!   ::   more info at: https://github.com/Tib3rius/AutoRecon\n"
+	echo -e "install script/wrapper by @initinfosec\n\n"
+	echo "'It's like bowling with bumpers.' - @ippsec"
+	printf '\n%.s' {1..2}
+	printf '============================================================================================='
+	printf '\n%.s' {1..3}
+
 	/bin/bash -li		#spawn new interactive login shell in hopes changes propagate.
 }
 
-#Finish banner
-printf '\n%.s' {1..3}
-printf '============================================================================================='
-printf '\n%.s' {1..3}
-echo -e "AutoRecon by Tib3rius installed!   ::   more info at: https://github.com/Tib3rius/AutoRecon\n"
-echo -e "install script/wrapper by @initinfosec\n\n"
-echo "'It's like bowling with bumpers.' - @ippsec"
-printf '\n%.s' {1..2}
-printf '============================================================================================='
-printf '\n%.s' {1..3}
-
-newShell
+finishUp
