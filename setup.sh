@@ -7,6 +7,7 @@ setupScript=$(find $PWD -name setup.sh 2>/dev/null)
 ARdir="$(dirname -- "$setupScript")"
 scriptReqs="$ARdir/AR-reqs.txt"
 ARscript="$ARdir/src/autorecon/autorecon.py"
+binPath="$(echo ~)/.local/bin"
 etcTools="seclists, dirsearch, ffuf, golang, enum4linux-ng"
 
 # check if running with sudo
@@ -177,6 +178,7 @@ pipxInstall () {
 	    #!/bin/bash -li
 	    sleep 1
 	    echo "alias ars='sudo \$(which autorecon)'" >> ~/.bash_aliases && source ~/.bashrc	#have alias look for location of AR at runtime using sudo
+	    $SUDO echo 'Defaults        secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:${binPath}' >> /etc/sudoers.d/secure_path
 	    #N.B. if using sudo, may desire to run scans in the following fashion: $sudo autorecon <opts> <target> && sudo chown -R $USER:$USER <ouput_dir>
 	    echo -e "\n\n * * * * * \n\n"
 	    echo -e "\n\nAutoRecon installed using pipx. Complete!\n"
@@ -195,6 +197,7 @@ pip3Install () {
 	    #!/bin/bash -li
 	    sleep 1
 	    echo "alias ars='sudo \$(which autorecon)'" >> ~/.bash_aliases && source ~/.bashrc	#have alias look for location of AR at runtime using sudo
+	    $SUDO echo 'Defaults        secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:${binPath}' >> /etc/sudoers.d/secure_path
 	    #N.B. if using sudo, may desire to run scans in the following fashion: $sudo autorecon <opts> <target> && sudo chown -R $USER:$USER <ouput_dir>
 	    echo -e "\n\n * * * * * \n\n"
 	    echo -e "\n\nAutoRecon installed using pip3. Complete!\n"
