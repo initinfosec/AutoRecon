@@ -153,9 +153,9 @@ pipxInstall () {
 	    #function to take care of pipx setup & installation of AutoRecon via pipx
 	    #install if pipx if it does not exist on sys
 	    if which pipx &> /dev/null ; then
-	    	echo -e "pipx detected installed, moving on.\n"
+	    	echo -e "\npipx detected installed, moving on.\n"
 	    else
-	    	echo -e "pipx not detected, installing...\n"
+	    	echo -e "\npipx not detected, installing...\n"
 		yes | $SUDO apt install pipx &> /dev/null && echo -e "\npipx installed.\n"
 	    fi
 	    
