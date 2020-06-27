@@ -30,6 +30,9 @@ if [[ $EUID -ne 0 ]]; then
 fi
 
 reqsInstall () {
+	# run apt update just in case user has not before to ensure pkg download ability
+	$SUDO apt update &> /dev/null
+	
 	echo -e "\nChecking your system against requirements for AutoRecon. Installing only what you don't have.\n\n"
 	sleep 2
 	# search for req pkgs on the system
