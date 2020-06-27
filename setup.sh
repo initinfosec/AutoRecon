@@ -222,9 +222,9 @@ pipxInstall () {
 	    echo -e "\n\nAutoRecon installed using pipx. Complete!\n"
 	    echo -e "\nAutoRecon is now in your PATH - you can run from anywhere simply using 'autorecon'\n"
 	    echo -e "\nThe script is also installed with & aliased to run with sudo as 'ars', e.g. 'ars <options> <host>'.\n"
-	    echo -e "If you want to run 'sudo autorecon' explicitly, execute the following as ROOT:\n"
+	    echo -e "\n\n(If you want to run 'sudo autorecon' explicitly, execute the following as ROOT:\n"
 	    echo -e "echo '${secPath}' >> /etc/sudoers.d/secure_path\n"
-	    echo -e "[***refusing to change your sudo settings programatically!***]\n\n"
+	    echo -e "[***refusing to change your sudo settings programatically!***])\n\n"
 }
 
 
@@ -243,9 +243,9 @@ pip3Install () {
 	    echo -e "\n\nAutoRecon installed using pip3. Complete!\n"
 	    echo -e "\nAutoRecon is now in your PATH - you can run from anywhere simply using 'autorecon'\n"
 	    echo -e "\nThe script is also installed with & aliased to run with sudo as 'ars', e.g. 'ars <options> <host>'.\n"
-	    echo -e "If you want to run 'sudo autorecon' explicitly, execute the following as ROOT:\n"
-	    echo -e "echo '$secPath' >> /etc/sudoers.d/secure_path\n"
-	    echo -e "[***refusing to change your sudo settings programatically!***]\n\n"
+	    echo -e "\n\n(If you want to run 'sudo autorecon' explicitly, execute the following as ROOT:\n"
+	    echo -e "echo '${secPath}' >> /etc/sudoers.d/secure_path\n"
+	    echo -e "[***refusing to change your sudo settings programatically!***])\n\n"
 }
 
 standaloneInstall () {
@@ -306,9 +306,9 @@ finishUp () {
 	printf '\n%.s' {1..3}
 	printf '============================================================================================='
 	printf '\n%.s' {1..3}
-	echo -e "AutoRecon by Tib3rius installed!   ::   more info at: https://github.com/Tib3rius/AutoRecon\n"
+	echo -e "\nAutoRecon by Tib3rius installed!   ::   more info at: https://github.com/Tib3rius/AutoRecon\n"
 	echo -e "\ninstall script/wrapper by @initinfosec\n"
-	echo -e "'\nIt's like bowling with bumpers.' - @ippsec"
+	echo -e "\n\n'It's like bowling with bumpers.' - @ippsec"
 	printf '\n%.s' {1..3}
 	printf '============================================================================================='
 	printf '\n%.s' {1..3}
