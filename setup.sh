@@ -106,7 +106,7 @@ etcInstall () {
 		if which enum4linux-ng &> /dev/null ; then 
     			echo -e "\nffuf successfully installed.\n"
     		else
-        		echo -e "\nenum4linux-ng install failed or didn't link to \$PATH. Moving on, but please investigate.\n"
+        		echo -e "\nffuf install failed or didn't link to \$PATH. Moving on, but please investigate.\n"
 		fi	
 		cd $ARdir
     	fi
@@ -218,11 +218,12 @@ pipxInstall () {
 	    sleep 1
 	    echo "alias ars='sudo \$(which autorecon)'" >> ~/.bash_aliases && source ~/.bashrc	#have alias look for location of AR at runtime using sudo
 	    #N.B. if using sudo, may desire to run scans in the following fashion: $sudo autorecon <opts> <target> && sudo chown -R $USER:$USER <ouput_dir>
-	    echo -e "\n\n * * * * * \n\n"
+	    echo -e "\n\n * * * * * "
 	    echo -e "\n\nAutoRecon installed using pipx. Complete!\n"
-	    echo -e "AutoRecon is now in your PATH - you can run from anywhere simply using 'autorecon'"
+	    echo -e "\nAutoRecon is now in your PATH - you can run from anywhere simply using 'autorecon'\n"
+	    echo -e "\nThe script is also installed with & aliased to run with sudo as 'ars', e.g. 'ars <options> <host>'.\n"
 	    echo -e "If you want to run 'sudo autorecon' explicitly, execute the following as ROOT:\n"
-	    echo -e "echo '${secPath} >> /etc/sudoers.d/secure_path'\n"
+	    echo -e "echo '${secPath}' >> /etc/sudoers.d/secure_path\n"
 	    echo -e "[***refusing to change your sudo settings programatically!***]\n\n"
 }
 
@@ -238,12 +239,12 @@ pip3Install () {
 	    sleep 1
 	    echo "alias ars='sudo \$(which autorecon)'" >> ~/.bash_aliases && source ~/.bashrc	#have alias look for location of AR at runtime using sudo
 	    #N.B. if using sudo, may desire to run scans in the following fashion: $sudo autorecon <opts> <target> && sudo chown -R $USER:$USER <ouput_dir>
-	    echo -e "\n\n * * * * * \n\n"
+	    echo -e "\n\n * * * * * "
 	    echo -e "\n\nAutoRecon installed using pip3. Complete!\n"
-	    echo -e "AutoRecon is now in your PATH - you can run from anywhere simply using 'autorecon'"
-	    echo -e "\n\nThe script is also installed with & aliased to run with sudo as 'ars', e.g. 'ars <options> <host>'.\n"
+	    echo -e "\nAutoRecon is now in your PATH - you can run from anywhere simply using 'autorecon'\n"
+	    echo -e "\nThe script is also installed with & aliased to run with sudo as 'ars', e.g. 'ars <options> <host>'.\n"
 	    echo -e "If you want to run 'sudo autorecon' explicitly, execute the following as ROOT:\n"
-	    echo -e "echo '$secPath >> /etc/sudoers.d/secure_path'\n"
+	    echo -e "echo '$secPath' >> /etc/sudoers.d/secure_path\n"
 	    echo -e "[***refusing to change your sudo settings programatically!***]\n\n"
 }
 
@@ -254,9 +255,10 @@ standaloneInstall () {
 	    $SUDO python3 -m pip install -r $ARdir/requirements.txt &> /dev/null	#run as sudo too in case want to run AR with root privs
 	    echo "alias autorecon='python3 ${ARscript}'" >> ~/.bash_aliases && source ~/.bashrc
 	    echo "alias ars='sudo python3 ${ARscript}'" >> ~/.bash_aliases && source ~/.bashrc	#alias with sudo in case user wants to run AR as sudo
-	    echo -e "\n\n * * * * * \n\n"
-	    echo -e "\nScript installed at ${ARscript}\n"
-	    echo -e "\nThe script is also installed with & aliased to run with sudo as 'ars', e.g. 'ars <options> <host>', or can also be run simply as 'sudo autorecon'\n"
+	    echo -e "\n\n * * * * * "
+	    echo -e "\n\nScript installed at ${ARscript}\n"
+	    echo -e "\nThe script is also installed with & aliased to run with sudo as 'ars', e.g. 'ars <options> <host>'.\n"
+	    echo -e "If you want AutoRecon to always run as root, you can change the alias to: alias autorecon='sudo python3 $ARscript'\n"
 	    echo -e "\n\nAutoRecon installed as a manual/standalone script. Complete!\n\n"
 }
 
