@@ -125,7 +125,7 @@ do
 	        $SUDO mv dirsearch /usr/share/
 	        $SUDO ln -s /usr/share/dirsearch/dirsearch.py /usr/bin/dirsearch
 	        echo -e "\nDirsearch installed\n"
-                cd $ARDir
+                cd $ARdir
 	    fi
 
 	    break
@@ -171,28 +171,38 @@ pipxInstall () {
 	    echo "alias autorecon='sudo \$(which autorecon)'" >> ~/.bash_aliases && source ~/.bashrc	#have alias look for location of AR at runtime using sudo
 	    #N.B. if using sudo, may desire to run scans in the following fashion: $autorecon <opts> <target> && sudo chown -R $USER:$USER <ouput_dir>
 	    echo -e "\n\nAutoRecon installed using pipx. Complete!\n" ; echo -e "AutoRecon location: $(which autorecon) - you can run from anywhere simply using 'autorecon'"
+	    newShell=yes
+}
+
+
+pip3Install () {
+	    echo -e "\nInstalling AutoRecon using pip3, please be patient...\n"
+	    python3 -m pip install git+https://github.com/initinfosec/AutoRecon.git --no-warn-script-location &> /dev/null
+	    export PATH=$PATH:~/.local/bin   
+	    #start another bash interactive shell to ensure PATH updates for pip3 propogate before continuing further install/config (for some reason source ~/.bashrc doesn't work)
+	    #!/bin/bash -li
+	    echo "alias autorecon='sudo \$(which autorecon)'" >> ~/.bash_aliases && source ~/.bashrc	#have alias look for location of AR at runtime using sudo
+	    #N.B. if using sudo, may desire to run scans in the following fashion: $autorecon <opts> <target> && sudo chown -R $USER:$USER <ouput_dir>
+	    echo -e "\n\nAutoRecon installed using pip3. Complete!\n" ; echo -e "AutoRecon location: $(which autorecon) - you can run from anywhere simply using 'autorecon'"
+	    newShell=yes
 }
 
 
 PS3='Please select your install method for AutoRecon: '
-options=("pipx - recommended" "pip3" "manual script" "Quit")
+options=("pipx - *recommended*" "pip3" "manual script" "Quit")
 select opt in "${options[@]}"
 do
     case $opt in
-	    "pipx - recommended")
-            echo -e "\nInstalling via pipx\n"
-	    #pipx AR installation
+	    "pipx - *recommended*")
+	    #install AutoRecon using pipx
 	    pipxInstall	 	#call to function to install/configure AR in fresh shell so changes are properly applied
-	    newShell=yes
 	    break
             ;;
 
         "pip3")
-            echo -e "\nInstalling AutoRecon via pip3, please be patient...\n"
-	    #install main autorecon using pip3
-	    python3 -m pip install git+https://github.com/initinfosec/AutoRecon.git --no-warn-script-location &> /dev/null
-	    export PATH=$PATH:~/.local/bin
-	    echo -e "\nAutoRecon installed using pip3. Complete!\nAutorecon located at $(which autorecon) - path is added to your user profile, so you can run 'autorecon' from anywhere.\n"
+	    #install autorecon using pip3
+	    pip3Install		#call to function to install/configure AR in fresh shell so changes are properly applied
+	    newShell=yes
 	    break
             ;;
 
@@ -225,9 +235,9 @@ printf '\n%.s' {1..2}
 printf '========================================================================================='
 printf '\n%.s' {1..3}
 
-#spawn new shell if installed from pipx
+#spawn new shell if installed from pipx or pip3
 if [ "$newShell" == "yes" ] ; then
-		echo -e "\nAutorecon has been installed with pipx. Loading you into a fresh new shell so updates are applied =).\n\nYou can run autorecon from here. If you exit this session, be sure to open a new terminal instance to ensure updates from the script are applied to your session.\n"
+		echo -e "\nAutorecon has been installed with pipx or pip3. Loading you into a fresh new shell so updates are applied =).\n\nYou can run autorecon from here. If you exit this session, be sure to open a new terminal instance to ensure updates from the script are applied to your session.\n"
 		newShell="bash -li"
 else
 		newShell=""
