@@ -8,7 +8,7 @@ scriptReqs="$ARdir/AR-reqs.txt"
 
 # check if running with sudo
 if [[ $EUID -ne 0 ]]; then
-	echo -e "Script will need sudo/root privs for portions of the install actions. You may be prompted for your password if installs need to be made.\n\n"
+	echo -e "\nThis script will need sudo/root privs for portions of the install actions. You may be prompted for your password if installs need to be made.\n\n"
 	SUDO='sudo'
 fi
 
