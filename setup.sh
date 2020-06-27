@@ -77,7 +77,7 @@ etcInstall () {
 	if which seclists &> /dev/null ; then
     		echo -e "\nseclists detected installed, moving on.\n\n"
     	else
-    		echo -e "\nseclists not detected, installing...\n(this make take a moment, so please be patient)...\n"
+    		echo -e "\nseclists not detected, installing...\n(this may take a moment, so please be patient)...\n"
 		yes | $SUDO apt install seclists &> /dev/null && echo -e "\nseclists installed.\n"
        	fi
 
@@ -85,7 +85,7 @@ etcInstall () {
     	if which go &> /dev/null ; then
     		echo -e "\ngolang detected installed, moving on.\n"
     	else
-    		echo -e "\ngolang not detected, installing...\n(this make take a moment, so please be patient)...\n"
+    		echo -e "\ngolang not detected, installing...\n(this may take a moment, so please be patient)...\n"
 		yes | $SUDO apt install golang &> /dev/null && echo -e "\ngolang installed.\n"
        	fi
 	    
@@ -103,7 +103,7 @@ etcInstall () {
 		wget -q "$pkgURL"
 		tar xvzf "$ffufPkg" &> /dev/null && rm "$ffufPkg"
 		$SUDO mv $ffufDir /usr/share/ && $SUDO ln -s /usr/share/ffuf/ffuf /usr/bin/ffuf
-		if which enum4linux-ng &> /dev/null ; then 
+		if which ffuf &> /dev/null ; then 
     			echo -e "\nffuf successfully installed.\n"
     		else
         		echo -e "\nffuf install failed or didn't link to \$PATH. Moving on, but please investigate.\n"
@@ -115,7 +115,7 @@ etcInstall () {
     	if which enum4linux-ng &> /dev/null ; then 
     		echo -e "\nenum4linux-ng detected installed, moving on.\n"
     	else
-        	echo -e "\nenum4linux-ng not detected, installing...\n(this make take a moment, so please be patient)...\n"
+        	echo -e "\nenum4linux-ng not detected, installing...\n(this may take a moment, so please be patient)...\n"
         	e4lngDir="$ARdir/enum4linux-ng"
 		mkdir $e4lngDir && cd $e4lngDir
                	#grab necessary files
