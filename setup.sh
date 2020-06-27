@@ -7,6 +7,7 @@ setupScript=$(find $PWD -name setup.sh 2>/dev/null)
 ARdir="$(dirname -- "$setupScript")"
 scriptReqs="$ARdir/AR-reqs.txt"
 ARscript="$ARdir/src/autorecon/autorecon.py"
+etcTools="seclists, dirsearch, ffuf, golang, enum4linux-ng"
 
 # check if running with sudo
 if [[ $EUID -ne 0 ]]; then
@@ -53,7 +54,7 @@ while IFS='' read -r LINE || [ -n "${LINE}" ]; do
 done < $scriptReqs
 
 echo -e "\n\nInstall optional tools/extended tool chest ['etc'] for autorecon?\n"
-echo -e "\n(The etc toolset currently includes seclists, enum4linux-ng, dirsearch, ffuf, & golang.)\n"
+echo -e "\n(The etc toolset currently includes: ${etcTools}.)\n"
 echo -e "\nThese tools are not strictly required for AutoRecon operation, but some commands may fail without them (especially commands in manual_commands.txt).\n\n"
 
 PS3='Install optional tools/extended tool chest ["etc"] for autorecon? : '
@@ -74,9 +75,9 @@ do
 
 	    #install golang if not already there
 	    if which go &> /dev/null ; then
-	    	echo -e "golang detected installed, moving on.\n"
+	    	echo -e "\ngolang detected installed, moving on.\n"
 	    else
-	    	echo -e "golang not detected, installing...\n(this make take a moment, so please be patient)...\n"
+	    	echo -e "\ngolang not detected, installing...\n(this make take a moment, so please be patient)...\n"
 		yes | $SUDO apt install golang &> /dev/null && echo -e "\ngolang installed.\n"
             fi
 	    
@@ -193,7 +194,7 @@ pip3Install () {
 
 
 PS3='Please select your install method for AutoRecon: '
-options=("pipx - *recommended*" "pip3" "manual script" "Quit")
+options=("pipx - *recommended*" "pip3" "manual/standalone script" "Quit")
 select opt in "${options[@]}"
 do
     case $opt in
@@ -209,16 +210,16 @@ do
 	    break
             ;;
 
-        "manual script")
+        "manual/standalone script")
             echo -e "\n\nInstalling AutoRecon a manual/standalone script, please be patient...\n"
-	    #install main autorecon using manual/script method
+	    #install AutoRecon using manual/standalone script method
 	    python3 -m pip install -r $ARdir/requirements.txt &> /dev/null
 	    $SUDO python3 -m pip install -r $ARdir/requirements.txt &> /dev/null	#run as sudo too in case want to run AR with root privs
 	    echo "alias autorecon='python3 ${ARscript}'" >> ~/.bash_aliases && source ~/.bashrc
 	    echo "alias ars='sudo python3 ${ARscript}'" >> ~/.bash_aliases && source ~/.bashrc	#alias with sudo in case user wants to run AR as sudo
 	    echo -e "\nScript installed at ${ARscript}\n"
-	    echo -e "\n\nThe script is also installed with & aliased to run with sudo as 'ars', e.g. 'ars <options> <host>', or can also be run simply as 'sudo autorecon'\n"
-	    echo -e "\nAutoRecon installed as a script. Complete!\n\n"
+	    echo -e "\nThe script is also installed with & aliased to run with sudo as 'ars', e.g. 'ars <options> <host>', or can also be run simply as 'sudo autorecon'\n"
+	    echo -e "\n\nAutoRecon installed as a manual/standalone script. Complete!\n\n"
 	    break
             ;;
 
