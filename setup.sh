@@ -23,10 +23,10 @@ etcTools="seclists, dirsearch, ffuf, golang, enum4linux-ng"
 secPath="Defaults        secure_path=\"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:${binPath}\""
 
 # check who script is run as
-if [[ $(id -u) -eq 0 ]]; then
-	echo -e "\nPlease do not run this script as root unless you run as the root user in normal operation.\nPlease instead use a user with sudo privileges, but do NOT run with sudo prefixed. Portions of the install actions will require elevated privileges, but the script will handle the sudo calls.\nYou may be prompted for your password if installs need to be made.\n\n"
-	echo -e "If you install as the root user, AutoRecon may not work as a standard user. Continue the install as root?\n"
-	select yn in "Continue as root?" "Abort"; do
+if [[ $EUID -eq 0 ]]; then
+	echo -e "\nPlease do not run this script as sudo or root (unless you run as the root user in normal operation.)\nPlease instead use a user with sudo privileges, but do NOT run with sudo prefixed. Portions of the install actions will require elevated privileges, but the script will handle the sudo calls.\nYou may be prompted for your password if installs need to be made.\n\n"
+	echo -e "If you install with sudo or as the root user, AutoRecon may not work as a standard user. Continue the install as root/sudo?\n"
+	select yn in "Continue as root/sudo?" "Abort"; do
     		case $yn in
         		"Continue as root" ) echo -e "\nProceeding with install.\n"; break;;
         		Abort ) echo -e "\nExiting...\n"; exit 1;;
