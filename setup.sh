@@ -228,7 +228,7 @@ pipxInstall () {
 	    echo -e "\n\n(If you want to run 'sudo autorecon' explicitly, execute the following as ROOT:\n"
 	    echo -e "echo '${secPath}' >> /etc/sudoers.d/secure_path\n"
 	    echo -e "[***refusing to change your sudo settings programatically!***])\n\n"
-	    echo -e "\n\n * * * * * "
+	    echo -e "* * * * * \n\n"
 }
 
 
