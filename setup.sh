@@ -250,7 +250,7 @@ pip3Install () {
 	    echo -e "\n\n(If you want to run 'sudo autorecon' explicitly, execute the following as ROOT:\n"
 	    echo -e "echo '${secPath}' >> /etc/sudoers.d/secure_path\n"
 	    echo -e "[***refusing to change your sudo settings programatically!***])\n\n"
-	    echo -e "\n\n * * * * * "
+	    echo -e " * * * * * \n\n"
 }
 
 standaloneInstall () {
@@ -265,7 +265,7 @@ standaloneInstall () {
 	    echo -e "\nThe script is also installed with & aliased to run with sudo as 'ars', e.g. 'ars <options> <host>'.\n"
 	    echo -e "\nIf you want AutoRecon to always run as root, you can change the alias to: alias autorecon='sudo python3 $ARscript'\n\n"
 	    echo -e "\n\nAutoRecon installed as a manual/standalone script. Complete!\n\n"
-	    echo -e "\n\n * * * * * "
+	    echo -e " * * * * * \n\n"
 }
 
 
