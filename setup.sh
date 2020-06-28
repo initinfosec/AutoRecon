@@ -4,15 +4,6 @@
 
 #only tested on kali 2020.x - error checking/input validation is not thorough
 
-echo -e "\nThis is a 'best-effort' installer, only tested on kali 2020.x. Manual troubleshooting may be necessary if failure occurs.\n\n"
-echo -e "Would you  like to continue and install AutoRecon by Tib3rius?\nMore info at: https://github.com/Tib3rius/AutoRecon\n"
-select yn in "Install" "Abort"; do
-    case $yn in
-        Install ) echo -e "\nProceeding with install.\n"; break;;
-        Abort ) echo -e "\nExiting...\n"; exit 1;;
-    esac
-done
-
 # global vars
 setupScript=$(find $PWD -name setup.sh 2>/dev/null)
 ARdir="$(dirname -- "$setupScript")"
@@ -22,27 +13,45 @@ binPath="$HOME/.local/bin"
 etcTools="seclists, dirsearch, ffuf, golang, enum4linux-ng"
 secPath="Defaults        secure_path=\"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:${binPath}\""
 
-# check who script is run as
-if [[ $EUID -eq 0 ]]; then
-	echo -e "\nPlease do not run this script as sudo or root (unless you run as the root user in normal operation.)\nPlease instead use a user with sudo privileges, but do NOT run with sudo prefixed. Portions of the install actions will require elevated privileges, but the script will handle the sudo calls.\n\n"
-	echo -e "If you install with sudo or as the root user, AutoRecon may not work as a standard user.\n\n Continue the install as root/sudo?\n"
-	select yn in "Continue as root/sudo" "Abort"; do
-    		case $yn in
-        		"Continue as root/sudo" ) echo -e "\nProceeding with install.\n"; break;;
-        		Abort ) echo -e "\nExiting...\n"; exit 1;;
-    		esac
-	done
-	sleep 1
-elif [[ $EUID -ne 0 ]]; then
-	sudo -k 	# make sure to ask for password on next sudo
-    	if sudo true; then
-        	echo -e "\nYou are running this script in the correct manner, as a user with sudo privileges but not prefixed with sudo. Portions of the install actions will require elevated privileges, but the script will handle the sudo calls.\nYou may be prompted for your password if installs need to be made.\nContinuing...\n\n"
-		SUDO='sudo '
-	else
-		echo "\nWrong password or not in the sudoers file! Please run this script as a user with sudo privileges, WITHOUT prefixing sudo on the script.\nYou will need administrative access to perform some functions of the script, but the script will handle the sudo calls.\n"
-		exit 1
+userCheck () {
+	# check who script is run as
+	if [[ $EUID -eq 0 ]]; then
+		echo -e "\nPlease do not run this script as sudo or root (unless you run as the root user in normal operation.)\nPlease instead use a user with sudo privileges, but do NOT run with sudo prefixed. Portions of the install actions will require elevated privileges, but the script will handle the sudo calls.\n\n"
+		echo -e "If you install with sudo or as the root user, AutoRecon may not work as a standard user.\n\nContinue the install as root/sudo?\n"
+		select yn in "Continue as root/sudo" "Abort"; do
+    			case $yn in
+        			"Continue as root/sudo" ) echo -e "\nProceeding with install.\n"; break;;
+        			Abort ) echo -e "\nExiting...\n"; exit 1;;
+    			esac
+		done
+		sleep 1
+	elif [[ $EUID -ne 0 ]]; then
+		sudo -k 	# make sure to ask for password on next sudo
+    		if sudo true; then
+        		echo -e "\nYou are running this script in the correct manner, as a user with sudo privileges but not prefixed with sudo. Portions of the install actions will require elevated privileges, but the script will handle the sudo calls.\nYou may be prompted for your password if installs need to be made.\nContinuing...\n\n"
+			SUDO='sudo '
+		else
+			echo "\nWrong password or not in the sudoers file! Please run this script as a user with sudo privileges, WITHOUT prefixing sudo on the script.\nYou will need administrative access to perform some functions of the script, but the script will handle the sudo calls.\n"
+			exit 1
+		fi
 	fi
-fi
+}
+
+preface () {
+	echo -e "\nThis is a 'best-effort' installer, only tested on kali 2020.x. Manual troubleshooting may be necessary if failure occurs.\n\n"
+	echo -e "Would you  like to continue and install AutoRecon by Tib3rius?\nMore info at: https://github.com/Tib3rius/AutoRecon\n"
+	select yn in "Install" "Abort"; do
+    	case $yn in
+	        Install ) echo -e "\nProceeding with install.\n"; break;;
+	        Abort ) echo -e "\nExiting...\n"; exit 1;;
+    	esac
+	done
+}
+
+#start the script and display caveats
+userCheck
+preface
+
 
 reqsInstall () {
 	# run apt update just in case user has not before to ensure pkg download ability
