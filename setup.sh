@@ -22,11 +22,26 @@ binPath="$HOME/.local/bin"
 etcTools="seclists, dirsearch, ffuf, golang, enum4linux-ng"
 secPath="Defaults        secure_path=\"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:${binPath}\""
 
-# check if running with sudo
-if [[ $EUID -ne 0 ]]; then
-	echo -e "\nYou're not running as sudo or root. This script will need sudo/root privs for portions of the install actions.\nYou may be prompted for your password if installs need to be made.\n\n"
-	SUDO='sudo'
+# check who script is run as
+if [[ $(id -u) -eq 0 ]]; then
+	echo -e "\nPlease do not run this script as root unless you run as the root user in normal operation.\nPlease instead use a user with sudo privileges, but do NOT run with sudo prefixed. Portions of the install actions will require elevated privileges, but the script will handle the sudo calls.\nYou may be prompted for your password if installs need to be made.\n\n"
+	echo -e "If you install as the root user, AutoRecon may not work as a standard user. Continue the install as root?\n"
+	select yn in "Continue as root?" "Abort"; do
+    		case $yn in
+        		Continue as root ) echo -e "\nProceeding with install.\n"; break;;
+        		Abort ) echo -e "\nExiting...\n"; exit 1;;
+    		esac
+	done
 	sleep 1
+elif [[ $EUID !=0 ]]; then
+	sudo -k 	# make sure to ask for password on next sudo
+    	if sudo true; then
+        	echo -e "\nYou are running this script in the correct manner, as a user with sudo privileges but not prefixed with sudo. Portions of the install actions will require elevated privileges, but the script will handle the sudo calls.\nYou may be prompted for your password if installs need to be made.\nContinuing...\n\n"
+		SUDO='sudo '
+	else
+		echo "\nWrong password or not in the sudoers file! Please run this script as a user with sudo privileges, WITHOUT prefixing sudo on the script.\nYou will need administrative access to perform some functions of the script, but the script will handle the sudo calls.\n"
+		exit 1
+	fi
 fi
 
 reqsInstall () {
