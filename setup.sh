@@ -33,7 +33,7 @@ if [[ $(id -u) -eq 0 ]]; then
     		esac
 	done
 	sleep 1
-elif [[ $EUID !=0 ]]; then
+elif [[ $EUID -ne 0 ]]; then
 	sudo -k 	# make sure to ask for password on next sudo
     	if sudo true; then
         	echo -e "\nYou are running this script in the correct manner, as a user with sudo privileges but not prefixed with sudo. Portions of the install actions will require elevated privileges, but the script will handle the sudo calls.\nYou may be prompted for your password if installs need to be made.\nContinuing...\n\n"
