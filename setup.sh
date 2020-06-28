@@ -28,7 +28,7 @@ if [[ $(id -u) -eq 0 ]]; then
 	echo -e "If you install as the root user, AutoRecon may not work as a standard user. Continue the install as root?\n"
 	select yn in "Continue as root?" "Abort"; do
     		case $yn in
-        		Continue as root ) echo -e "\nProceeding with install.\n"; break;;
+        		"Continue as root" ) echo -e "\nProceeding with install.\n"; break;;
         		Abort ) echo -e "\nExiting...\n"; exit 1;;
     		esac
 	done
