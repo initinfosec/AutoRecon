@@ -452,7 +452,7 @@ service-names = [
 
     [[smb.scan]]
     name = 'enum4linux-ng'
-    command = 'enum4linux-ng -A -M -L -D {address} 2>&1 | tee "{scandir}/enum4linux-ng.txt"'
+    command = 'enum4linux-ng -A -M -L -d {address} 2>&1 | tee "{scandir}/enum4linux-ng.txt"'
     run_once = true
     ports.tcp = [139, 389, 445]
     ports.udp = [137]
