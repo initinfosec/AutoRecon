@@ -239,7 +239,7 @@ pipxInstall () {
 	    python3 -m pipx ensurepath &> /dev/null
 	    
 	    #install autorecon using pipx
-	    pipx install --spec git+https://github.com/initinfosec/AutoRecon.git autorecon &> /dev/null
+	    pipx install git+https://github.com/initinfosec/AutoRecon.git &> /dev/null
 	    #start another bash interactive shell to ensure PATH updates for pipx propogate before continuing further install/config (for some reason source ~/.bashrc doesn't work)
 	    #!/bin/bash -li
 	    sleep 1
